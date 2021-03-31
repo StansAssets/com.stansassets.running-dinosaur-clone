@@ -1,0 +1,16 @@
+{
+    "name": "StansAssets.ProjectSample.Boxes.MenuUI",
+    "references": [
+        "StansAssets.ProjectSample.MainMenu",
+        "StansAssets.SceneManagement"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

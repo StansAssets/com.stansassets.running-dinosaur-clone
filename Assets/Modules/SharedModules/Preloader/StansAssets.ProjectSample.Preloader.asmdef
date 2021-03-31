@@ -1,0 +1,16 @@
+{
+    "name": "StansAssets.ProjectSample.UI",
+    "references": [
+        "StansAssets.ProjectSample.Core",
+        "StansAssets.SceneManagement"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

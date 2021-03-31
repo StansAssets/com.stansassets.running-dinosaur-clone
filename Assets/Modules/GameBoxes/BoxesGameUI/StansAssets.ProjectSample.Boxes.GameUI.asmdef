@@ -1,0 +1,18 @@
+{
+    "name": "StansAssets.ProjectSample.Boxes.GameUI",
+    "references": [
+        "StansAssets.ProjectSample.Core",
+        "StansAssets.ProjectSample.UI",
+        "StansAssets.SceneManagement",
+        "StansAssets.Foundation"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -1,0 +1,17 @@
+{
+    "name": "StansAssets.ProjectSample.MainMenu",
+    "references": [
+        "GUID:8c26edb72a5b44ef39c0bd009ec1322d",
+        "GUID:db0eb1f6c1244402aa4d287a997cdb47",
+        "GUID:d7e88f9a2ce00434d8a3ef904db60e12"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
