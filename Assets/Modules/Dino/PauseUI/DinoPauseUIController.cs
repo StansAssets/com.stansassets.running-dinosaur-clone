@@ -1,41 +1,30 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace StansAssets.ProjectSample.Boxes.PauseUI
 {
     public class DinoPauseUIController : MonoBehaviour, IDinoPauseUI
     {
-        [SerializeField]
-        Button m_BackButton = null;
-
-        [SerializeField]
-        Button m_RestartButton = null;
-
-        [SerializeField]
-        Button m_MainMenu = null;
-
-
-        public event Action OnBack;
-        public event Action OnMainMenu;
-        public event Action OnRestart;
-
-        void Awake()
-        {
-            m_BackButton.onClick.AddListener(() =>
-            {
-                OnBack?.Invoke();
-            });
-
-            m_RestartButton.onClick.AddListener(() =>
-            {
-                OnRestart?.Invoke();
-            });
-
-            m_MainMenu.onClick.AddListener(() =>
-            {
-                OnMainMenu?.Invoke();
-            });
+        public event UnityAction OnBack {
+            add => m_BackButton.onClick.AddListener (value);
+            remove => m_BackButton.onClick.RemoveListener (value);
         }
+        
+        public event UnityAction OnMainMenu {
+            add => m_MainMenu.onClick.AddListener (value);
+            remove => m_MainMenu.onClick.RemoveListener (value);
+        }
+        
+        public event UnityAction OnRestart {
+            add => m_RestartButton.onClick.AddListener (value);
+            remove => m_RestartButton.onClick.RemoveListener (value);
+        }
+        
+        [SerializeField] Button m_BackButton;
+        [SerializeField] Button m_RestartButton;
+        [SerializeField] Button m_MainMenu;
+
     }
 }

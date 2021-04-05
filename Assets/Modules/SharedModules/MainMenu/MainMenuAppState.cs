@@ -1,4 +1,7 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using JetBrains.Annotations;
 using StansAssets.SceneManagement;
 
@@ -16,11 +19,6 @@ namespace StansAssets.ProjectSample.Core
             m_MainMenuController.OnGameRequest += () =>
             {
                 App.State.Set(AppState.Game);
-            };
-
-            m_MainMenuController.OnSettingsRequest += () =>
-            {
-                App.State.Set(AppState.Settings);
             };
         }
 
@@ -62,3 +60,5 @@ namespace StansAssets.ProjectSample.Core
         }
     }
 }
+
+

@@ -2,7 +2,7 @@ namespace StansAssets.ProjectSample.Dino.Game
 {
     public enum DinoState
     {
-        Paused,
+        WaitingForStart,
         Grounded,
         Jumping,
         Ducking,

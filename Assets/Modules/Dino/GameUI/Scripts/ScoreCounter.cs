@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class ScoreCounter : MonoBehaviour
+public class ScoreCounter : MonoBehaviour, IDinoInGameUI
 {
     const string k_Format = "D5";
     
@@ -43,11 +43,12 @@ public class ScoreCounter : MonoBehaviour
         }
     }
 
-    void ResetScore ()
+    public void AddPoints (float pts) => Score += pts;
+    public void Reset ()
     {
         m_Hundreds = 100;
         Score = 0;
     }
 
-    public void ScoreGained (float pts) => Score += pts;
+    public void SetPause (bool paused) { }
 }

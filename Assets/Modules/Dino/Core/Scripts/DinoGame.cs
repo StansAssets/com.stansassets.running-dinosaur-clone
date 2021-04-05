@@ -1,35 +1,49 @@
 ﻿using System;
+using StansAssets.Foundation.Extensions;
 using StansAssets.ProjectSample.Dino.Game;
-using UnityEditor;
-using UnityEngine.Assertions;
 using UnityEngine.SceneManagement;
 
 namespace StansAssets.ProjectSample.Dino
 {
     public class DinoGame
     {
-        public event Action OnHit;
+        public event Action OnGameOver, OnStart;
         
-        readonly Scene m_GamePlayScene;
-        readonly IDinoInGameUI m_UI;
-
+        readonly DinoLevel m_DinoLevel;
+        readonly DinoCharacter m_DinoCharacter;
 
         public DinoGame (Scene targetScene, IDinoInGameUI ui)
         {
-            m_UI = ui;
-            m_GamePlayScene = targetScene;
-            UnityEngine.Object.FindObjectOfType<DinoCharacter> ().OnHit += () => OnHit?.Invoke ();
-            UnityEngine.Object.FindObjectOfType<DinoLevel> ().OnScoreGained += m_UI.AddPoints;
+            OnStart += ui.Reset;
+            
+            m_DinoCharacter = targetScene.GetComponentInChildren<DinoCharacter> ();
+            m_DinoCharacter.OnHit += () => OnGameOver?.Invoke ();
+            OnGameOver += () => m_DinoCharacter.State = DinoState.Dead;
+            OnStart += () => {
+                m_DinoCharacter.Reset ();
+                m_DinoCharacter.State = DinoState.Grounded;
+            };
+            
+            m_DinoLevel = targetScene.GetComponentInChildren<DinoLevel> ();
+            
+            m_DinoLevel.OnScoreGained += ui.AddPoints;
+            OnStart += () => {
+                m_DinoLevel.Reset ();
+                m_DinoLevel.SetLevelActive (true);
+            };
+            
         }
 
         internal void Restart ()
         {
-            
+            OnGameOver?.Invoke ();
+            OnStart?.Invoke ();
         }
 
         internal void Pause (bool isPaused)
         {
-            
+            m_DinoLevel.SetLevelActive (!isPaused);
+            m_DinoCharacter.SetFrozen (isPaused);
         }
 
         internal void Destroy ()
@@ -37,10 +51,9 @@ namespace StansAssets.ProjectSample.Dino
             
         }
 
-        internal void Start (Action callbackWhenCompleted)
+        internal void Start ()
         {
-            m_UI.Reset ();
-            callbackWhenCompleted?.Invoke ();
+            OnStart?.Invoke ();
         }
     }
 }

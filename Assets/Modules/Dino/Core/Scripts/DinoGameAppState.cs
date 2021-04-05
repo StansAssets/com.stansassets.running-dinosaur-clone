@@ -40,8 +40,9 @@ namespace StansAssets.ProjectSample.Dino
                                                    
                                                    var gamePlayScene = m_SceneActionsQueue.GetLoadedScene (k_GamePlaySceneName);
                                                    m_DinoGame = new DinoGame (gamePlayScene, m_InGameUI);
-                                                   m_DinoGame.OnHit += () => ShowEndGameScreen (k_EndGameUISceneName);
-                                                   m_DinoGame.Start (progressReporter.SetDone);
+                                                   m_DinoGame.OnGameOver += () => ShowEndGameScreen (k_EndGameUISceneName);
+                                                   progressReporter.SetDone ();
+                                                   m_DinoGame.Start ();
                                                });
                     break;
                 case StackAction.Removed:

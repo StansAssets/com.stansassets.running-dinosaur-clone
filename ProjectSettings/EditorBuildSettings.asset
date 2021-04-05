@@ -15,7 +15,7 @@ EditorBuildSettings:
     path: Assets/Modules/GameBoxes/BoxesGameUI/BoxesInGameUI.unity
     guid: 35a45212c2d6c4aeeb65725199cedaa6
   - enabled: 1
-    path: Assets/Modules/GameBoxes/BoxesMenuUI/BoxesMainMenu.unity
+    path: Assets/Modules/SharedModules/MainMenu/MainMenu.unity
     guid: 67b1869e0523a4238ab93a68a573b630
   - enabled: 1
     path: Assets/Modules/SharedModules/Preloader/MobilePreloader.unity
