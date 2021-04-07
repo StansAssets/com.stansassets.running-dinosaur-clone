@@ -7,7 +7,6 @@ namespace StansAssets.ProjectSample.Dino.Game
     {
         public event Action OnHit;
 
-        [SerializeField] GameObject m_RunningDino, m_DuckingDino;
         [SerializeField] AudioSource m_JumpAudioSource;
         [SerializeField] Animator m_Animator;
         [SerializeField] Rigidbody2D m_Rigidbody2D;
@@ -18,11 +17,12 @@ namespace StansAssets.ProjectSample.Dino.Game
         Vector3 m_SpawnPosition;
         // increases a height of jump if user holds the Jump button
         ConstantForce2D m_Force2D;
-
+        DinoState m_State;
+        
         void Start ()
         {
             State = DinoState.Grounded;
-            m_SpawnPosition = transform.position;
+            m_SpawnPosition = transform.localPosition;
             m_Rigidbody2D.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezeRotation;
 
             m_Force2D = m_Rigidbody2D.gameObject.AddComponent<ConstantForce2D> ();
@@ -30,10 +30,6 @@ namespace StansAssets.ProjectSample.Dino.Game
             m_Force2D.enabled = false;
         }
 
-        DinoState m_State;
-
-        static readonly int s_DuckingHash = Animator.StringToHash ("ducking");
-        static readonly int s_JumpingHash = Animator.StringToHash ("jumping");
 
         public DinoState State {
             get => m_State;
@@ -41,44 +37,31 @@ namespace StansAssets.ProjectSample.Dino.Game
                 if (m_State == value) return;
 
                 switch (value) {
-                    case DinoState.Ducking:
-                        UpdateVisuals ();
-
-                        break;
-                    case DinoState.Grounded: break;
-
                     case DinoState.Jumping:
                         m_JumpAudioSource.Play ();
                         Jump ();
                         break;
+                    case DinoState.Ducking:
+                    case DinoState.Grounded: 
+                        break;
                     case DinoState.Dead: 
-                        // todo disable animation
-                        return;
+                        SetFrozen (true);
+                        break;
+                    case DinoState.WaitingForStart:
+                        transform.localPosition = m_SpawnPosition;
+                        SetFrozen (true);
+                        break;
                     default: throw new ArgumentOutOfRangeException (nameof(value), value, null);
                 }
 
                 m_State = value;
-                UpdateVisuals ();
+                m_Animator.Play (GetAnimationName ());
             }
-        }
-
-        public void Reset ()
-        {
-            transform.position = m_SpawnPosition;
-            State = DinoState.WaitingForStart;
         }
 
         public void SetFrozen (bool frozen)
         {
             //todo
-        }
-
-        void UpdateVisuals ()
-        {
-            m_RunningDino.SetActive (State != DinoState.Ducking);
-            m_DuckingDino.SetActive (State == DinoState.Ducking);
-            m_Animator.SetBool (s_DuckingHash, State == DinoState.Ducking);
-            m_Animator.SetBool (s_JumpingHash, State == DinoState.Jumping);
         }
 
         void FixedUpdate ()
@@ -120,6 +103,18 @@ namespace StansAssets.ProjectSample.Dino.Game
                 State = DinoState.Grounded;
             else
                 OnHit?.Invoke ();
+        }
+
+        string GetAnimationName ()
+        {
+            switch (State) {
+                case DinoState.Dead: return "dino-dead";
+                case DinoState.WaitingForStart: return "dino-waiting";
+                case DinoState.Grounded: return "dino-running";
+                case DinoState.Jumping: return "dino-jumping";
+                case DinoState.Ducking: return "dino-ducking";
+                default: throw new ArgumentOutOfRangeException ();
+            }
         }
     }
 }

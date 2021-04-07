@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -8,38 +10,53 @@ namespace StansAssets.ProjectSample.Dino.Game
     public class DinoLevel : MonoBehaviour
     {
         public event Action<float> OnScoreGained;
+        public event Action OnReset;
 
         // Component that controls and updates game visual appearance
-        [SerializeField] TimeOfDay m_TimeOfDay;
         [SerializeField] float m_InitialSpeed, m_MaxSpeed, m_AccelerationPerFrame, m_ScoreFromSpeed;
         [SerializeField] RectTransform[] m_GroundBlocks;
-        [SerializeField] Vector2 m_GroundRespawnPosition;
+        [SerializeField] float m_GroundRespawnPositionX;
+        // The game is expected to run at 60 FPS
         [SerializeField] int m_SpawnNothingForFirstFrames = 30;
-        [SerializeField] int m_MinFramesBetweenSpawns = 50;
-        [SerializeField] int m_MaxFramesBetweenSpawns = 80;
 
         bool m_Running;
         float m_Speed;
-        IReadOnlyList<ObjectSpawner> m_Spawners;
         RectTransform m_AttachTarget;
         int m_FramesBeforeSpawn;
-        float m_OneOverInitialSpeed;
+        IReadOnlyList<ObjectSpawner> m_Spawners;
+        float m_FullGroundWidth;
         
-        int GetFramesTillNextSpawn () => Mathf.CeilToInt (UnityEngine.Random.Range (m_MinFramesBetweenSpawns, m_MaxFramesBetweenSpawns) * m_Speed * m_OneOverInitialSpeed);
+        // In the original game, the gap depends on width of the obstacle, the speed, and a width of the field of view 
+        int GetFramesGap (float minGapWidth)
+        {
+            // Number of frames required to cover the min gap, while moving with a current speed
+            var baseFramesGap = minGapWidth / (m_Speed * m_ScoreFromSpeed);
+            // Randomizing gap width, while also applying some additional scaling depending on current speed.
+            // As a result, the frames gap between obstacles is more or less the same value. 
+            return Mathf.CeilToInt (GapCoefficient * baseFramesGap * UnityEngine.Random.Range (1f, 1.3f));
+        }
 
+        // todo
+        float GapCoefficient => 1;
+        
+        IEnumerable<ObjectSpawner> AvailableSpawners => m_Spawners.Where (spawner => spawner.RequiredSpeed <= m_Speed);
+        
         void Start ()
         {
-            m_Spawners = Object.FindObjectsOfType<ObjectSpawner> ();
-            m_OneOverInitialSpeed = 60 / m_InitialSpeed;
+            m_Spawners = FindObjectsOfType<ObjectSpawner> ();
+            m_AttachTarget = m_GroundBlocks[0];
+            m_FullGroundWidth = m_GroundBlocks.Sum (block => block.rect.width);
         }
 
+        // Returns level to default values
         public void Reset ()
         {
-            m_TimeOfDay.Reset ();
             m_Speed = m_InitialSpeed;
             m_FramesBeforeSpawn = m_SpawnNothingForFirstFrames;
+            OnReset?.Invoke ();
         }
 
+        // Allows to pause the level
         public void SetLevelActive (bool active) => m_Running = active;
 
         void FixedUpdate ()
@@ -50,11 +67,12 @@ namespace StansAssets.ProjectSample.Dino.Game
             OnScoreGained?.Invoke (scoreGain);
 
             var distance = m_Speed * Time.fixedDeltaTime * Vector2.left;
-            foreach (var ground in m_GroundBlocks) {
-                ground.Translate (distance);
-                if (ground.transform.position.x < m_GroundRespawnPosition.x - ground.rect.width) {
-                    ground.SetPositionAndRotation (m_GroundRespawnPosition, Quaternion.identity);
-                    m_AttachTarget = ground;
+            for (int i = 0; i < m_GroundBlocks.Length; i++) {
+                m_GroundBlocks[i].Translate (distance);
+                if (m_GroundBlocks[i].transform.position.x < m_GroundRespawnPositionX) {
+                    m_GroundBlocks[i].Translate (new Vector3 (m_FullGroundWidth, 0));
+                    int nextBlockIndex = (i + 1) % m_GroundBlocks.Length;
+                    m_AttachTarget = m_GroundBlocks[nextBlockIndex];
                 }
             }
 
@@ -73,9 +91,11 @@ namespace StansAssets.ProjectSample.Dino.Game
 
         GameObject GetRandomObstacle ()
         {
-            var result = m_Spawners[UnityEngine.Random.Range (0, m_Spawners.Count - 1)].GetObject ();
+            var spawners = AvailableSpawners.ToArray ();
+            var selectedSpawner = spawners[UnityEngine.Random.Range (0, spawners.Length - 1)];
+            var result = selectedSpawner.GetObject ();
             result.SetActive (true);
-            m_FramesBeforeSpawn = GetFramesTillNextSpawn ();
+            m_FramesBeforeSpawn = GetFramesGap (selectedSpawner.RequiredSpace);
             return result;
         }
     }

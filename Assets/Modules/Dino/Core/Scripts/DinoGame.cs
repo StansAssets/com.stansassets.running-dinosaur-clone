@@ -2,34 +2,39 @@
 using StansAssets.Foundation.Extensions;
 using StansAssets.ProjectSample.Dino.Game;
 using UnityEngine.SceneManagement;
+using StansAssets.ProjectSample.Core;
 
 namespace StansAssets.ProjectSample.Dino
 {
     public class DinoGame
     {
+        const string k_InGameUISceneName = "DinoInGameUI";
+        
         public event Action OnGameOver, OnStart;
         
         readonly DinoLevel m_DinoLevel;
         readonly DinoCharacter m_DinoCharacter;
 
-        public DinoGame (Scene targetScene, IDinoInGameUI ui)
+        public DinoGame (Scene targetScene)
         {
-            OnStart += ui.Reset;
-            
             m_DinoCharacter = targetScene.GetComponentInChildren<DinoCharacter> ();
             m_DinoCharacter.OnHit += () => OnGameOver?.Invoke ();
             OnGameOver += () => m_DinoCharacter.State = DinoState.Dead;
-            OnStart += () => {
-                m_DinoCharacter.Reset ();
-                m_DinoCharacter.State = DinoState.Grounded;
-            };
             
             m_DinoLevel = targetScene.GetComponentInChildren<DinoLevel> ();
+            // in would be nice to load/unload related scenes implicitly
+            // with attribute like [BindScene(k_InGameUISceneName)]
+            App.Services.Get<ISceneService> ().Load<IDinoInGameUI> (k_InGameUISceneName,
+                                                                    (scene, ui) => {
+                                                                        OnStart += ui.Reset;
+                                                                        m_DinoLevel.OnScoreGained += ui.AddPoints;
+                                                                    });
             
-            m_DinoLevel.OnScoreGained += ui.AddPoints;
             OnStart += () => {
+                m_DinoCharacter.State = DinoState.WaitingForStart;
                 m_DinoLevel.Reset ();
                 m_DinoLevel.SetLevelActive (true);
+                m_DinoCharacter.State = DinoState.Grounded;
             };
             
         }
@@ -48,7 +53,7 @@ namespace StansAssets.ProjectSample.Dino
 
         internal void Destroy ()
         {
-            
+            App.Services.Get<ISceneService> ().Unload (k_InGameUISceneName, () => { });
         }
 
         internal void Start ()

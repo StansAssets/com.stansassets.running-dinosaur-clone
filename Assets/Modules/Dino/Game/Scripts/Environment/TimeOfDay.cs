@@ -1,44 +1,41 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace StansAssets.ProjectSample.Dino.Game
 {
     public class TimeOfDay : MonoBehaviour
     {
+        public event Action<bool> OnDayTimeChange;
+        
         [SerializeField] int dayTimeLength, nightTimeLength;
 
         bool m_IsDay;
         float m_TimeOfDayLength, m_TimeOfDayRemaining;
-        MoonPhases m_MoonPhases;
 
         public void ScoreGained (float score)
         {
             m_TimeOfDayRemaining -= score;
-            if (m_TimeOfDayRemaining <= 0) { BeginTimeOfDay (!m_IsDay); }
-
-            m_MoonPhases.Visible = !m_IsDay;
-            if (!m_IsDay)
-                m_MoonPhases.UpdateNightTimeProgress (1f - (m_TimeOfDayLength - m_TimeOfDayRemaining) / m_TimeOfDayLength);
-        }
-
-        public void Reset ()
-        {
-            m_TimeOfDayRemaining = 0;
-            BeginTimeOfDay (true);
-            m_MoonPhases.Reset ();
+            if (m_TimeOfDayRemaining <= 0) {
+                BeginTimeOfDay (!m_IsDay);
+            }
         }
 
         void Start ()
         {
-            FindObjectOfType<DinoLevel> ().OnScoreGained += ScoreGained;
-            m_MoonPhases = FindObjectOfType<MoonPhases> ();
+            var level = FindObjectOfType<DinoLevel> ();
+            level.OnScoreGained += ScoreGained;
+            level.OnReset += () => {
+                m_TimeOfDayRemaining = 0;
+                BeginTimeOfDay (true);
+            };
         }
 
         void BeginTimeOfDay (bool isDay)
         {
-            // TODO  switch time of day
             m_IsDay = isDay;
             m_TimeOfDayLength = isDay ? dayTimeLength : nightTimeLength;
             m_TimeOfDayRemaining += m_TimeOfDayLength;
+            OnDayTimeChange?.Invoke (m_IsDay);
         }
 
         /*void SetColors ()

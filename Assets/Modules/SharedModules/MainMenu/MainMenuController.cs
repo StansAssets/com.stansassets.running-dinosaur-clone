@@ -1,26 +1,18 @@
-using System;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace StansAssets.ProjectSample.Core
 {
     class MainMenuController : MonoBehaviour, IMainMenuController
     {
-        [SerializeField]
-        Button m_PlayButton = null;
-
-        [SerializeField]
-        GameObject m_MainMenu = null;
-
-        public event Action OnGameRequest;
-
-        void Awake()
-        {
-            m_PlayButton.onClick.AddListener(() =>
-            {
-                OnGameRequest?.Invoke();
-            });
+        public event UnityAction OnGameRequest {
+            add => m_PlayButton.onClick.AddListener (value);
+            remove => m_PlayButton.onClick.RemoveListener (value);
         }
+        
+        [SerializeField] Button m_PlayButton;
+        [SerializeField] GameObject m_MainMenu;
 
         public void Active()
         {

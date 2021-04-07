@@ -9,24 +9,21 @@ EditorBuildSettings:
     path: Assets/Modules/SharedModules/Landing/Landing.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
   - enabled: 1
-    path: Assets/Modules/GameBoxes/BoxesGamePlay/Scenes/Level1/BoxesGamePlayLevel.unity
-    guid: 499b7436b676b48cf84860438571d7f5
-  - enabled: 1
-    path: Assets/Modules/GameBoxes/BoxesGameUI/BoxesInGameUI.unity
-    guid: 35a45212c2d6c4aeeb65725199cedaa6
+    path: Assets/Modules/SharedModules/Preloader/MobilePreloader.unity
+    guid: 3b6fbfcbaf37d4eb6b4777ca2728b102
   - enabled: 1
     path: Assets/Modules/SharedModules/MainMenu/MainMenu.unity
     guid: 67b1869e0523a4238ab93a68a573b630
   - enabled: 1
-    path: Assets/Modules/SharedModules/Preloader/MobilePreloader.unity
-    guid: 3b6fbfcbaf37d4eb6b4777ca2728b102
+    path: Assets/Modules/Dino/EndGameUI/DinoEndGameUI.unity
+    guid: 76afb2de802b9b84991ddf83f9163d6c
   - enabled: 1
-    path: Assets/Modules/GameBoxes/BoxesPauseUI/BoxesPauseUI.unity
-    guid: 91eefe075f9979346971d670ef40ced8
+    path: Assets/Modules/Dino/PauseUI/DinoPauseUI.unity
+    guid: 8af7ca06f617e59408d6a7fbad032a88
   - enabled: 1
-    path: Assets/Modules/GameBoxes/BoxesEndGameUI/BoxesDefeatUI.unity
-    guid: e109f45796cd7454fab09ff78371c86e
+    path: Assets/Modules/Dino/Game/Scenes/DinoGame.unity
+    guid: 7ba23e68d62f606408af84199abac2b7
   - enabled: 1
-    path: Assets/Modules/GameBoxes/BoxesEndGameUI/BoxesVictoryUI.unity
-    guid: f01cfae064a995f47b8a1f60ba81b194
+    path: Assets/Modules/Dino/GameUI/Scenes/DinoInGameUI.unity
+    guid: ba1ee072034969d4bad79c38d8ceac5f
   m_configObjects: {}

@@ -11,7 +11,6 @@ namespace StansAssets.ProjectSample.Dino
     public class DinoGameAppState : ApplicationState, IAppState
     {
         const string k_GamePlaySceneName = "DinoGame";
-        const string k_InGameUISceneName = "DinoInGameUI";
         const string k_PauseUISceneName = "DinoPauseUI";
         const string k_EndGameUISceneName = "DinoEndGameUI";
 
@@ -19,7 +18,6 @@ namespace StansAssets.ProjectSample.Dino
 
         public AppState StateId => AppState.Game;
         DinoGame m_DinoGame;
-        IDinoInGameUI m_InGameUI;
 
         public DinoGameAppState ()
         {
@@ -31,15 +29,11 @@ namespace StansAssets.ProjectSample.Dino
             switch (evt.Action) {
                 case StackAction.Added:
                     m_SceneActionsQueue.AddAction (SceneActionType.Load, k_GamePlaySceneName);
-                    m_SceneActionsQueue.AddAction (SceneActionType.Load, k_InGameUISceneName);
-
                     m_SceneActionsQueue.Start (
                                                progressReporter.UpdateProgress,
                                                () => {
-                                                   m_InGameUI = m_SceneActionsQueue.GetLoadedSceneManager<IDinoInGameUI> ();
-                                                   
                                                    var gamePlayScene = m_SceneActionsQueue.GetLoadedScene (k_GamePlaySceneName);
-                                                   m_DinoGame = new DinoGame (gamePlayScene, m_InGameUI);
+                                                   m_DinoGame = new DinoGame (gamePlayScene);
                                                    m_DinoGame.OnGameOver += () => ShowEndGameScreen (k_EndGameUISceneName);
                                                    progressReporter.SetDone ();
                                                    m_DinoGame.Start ();
@@ -48,7 +42,6 @@ namespace StansAssets.ProjectSample.Dino
                 case StackAction.Removed:
                     m_DinoGame.Destroy ();
                     m_SceneActionsQueue.AddAction (SceneActionType.Unload, k_GamePlaySceneName);
-                    m_SceneActionsQueue.AddAction (SceneActionType.Unload, k_InGameUISceneName);
                     m_SceneActionsQueue.Start (progressReporter.UpdateProgress, progressReporter.SetDone);
                     break;
                 case StackAction.Paused:

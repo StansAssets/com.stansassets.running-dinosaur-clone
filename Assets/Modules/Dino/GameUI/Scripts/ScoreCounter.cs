@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
+[RequireComponent(typeof(AudioSource))]
 public class ScoreCounter : MonoBehaviour, IDinoInGameUI
 {
     const string k_Format = "D5";
