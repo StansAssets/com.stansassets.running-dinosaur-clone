@@ -1,7 +1,6 @@
 using System;
 using JetBrains.Annotations;
 using StansAssets.SceneManagement;
-using UnityEngine;
 
 namespace StansAssets.ProjectSample.Core
 {

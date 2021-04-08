@@ -1,6 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
-using UnityEngine.UI;
 
 namespace StansAssets.ProjectSample.Dino.Game
 {
@@ -24,10 +22,10 @@ namespace StansAssets.ProjectSample.Dino.Game
             Phase = 0;
         }
 
-        protected override void HandleDayTimeChange (bool value)
+        protected override void HandleDayTimeChange (bool isDay)
         {
-            base.HandleDayTimeChange (value);
-            if (!value) {
+            base.HandleDayTimeChange (isDay);
+            if (!isDay) {
                 Phase = Phase++ % m_MoonSprites.Length;
             }
         }
@@ -37,9 +35,9 @@ namespace StansAssets.ProjectSample.Dino.Game
             base.AddScore (score);
             if (CycleProgress > 0) {
                 m_Image.color = new Color (
-                                           0.7333333333f,
-                                           0.7333333333f,
-                                           0.7333333333f,
+                                           0.75f,
+                                           0.75f,
+                                           0.75f,
                                            GetMoonTransparency (CycleProgress));
             }
         }

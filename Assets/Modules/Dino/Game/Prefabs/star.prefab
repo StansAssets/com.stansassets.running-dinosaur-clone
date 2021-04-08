@@ -18,7 +18,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &205157728983691943
 RectTransform:
   m_ObjectHideFlags: 0
@@ -106,7 +106,7 @@ GameObject:
   - component: {fileID: 4724186837619238760}
   - component: {fileID: 4724186837619238763}
   m_Layer: 5
-  m_Name: star1
+  m_Name: star
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -156,3 +156,9 @@ MonoBehaviour:
   m_ScoreForFullCycle: 300
   m_DisabledAtDay: 1
   m_DisabledAtNight: 0
+  m_Bounds:
+    serializedVersion: 2
+    x: -100
+    y: 650
+    width: 2120
+    height: 300

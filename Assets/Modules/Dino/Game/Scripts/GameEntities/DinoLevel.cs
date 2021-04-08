@@ -19,21 +19,21 @@ namespace StansAssets.ProjectSample.Dino.Game
 
         bool m_Running;
         float m_Speed;
-        RectTransform m_AttachTarget;
         int m_FramesBeforeSpawn;
         IReadOnlyList<ObjectSpawner> m_Spawners;
         float m_FullGroundWidth;
+        // New spawned obstacles will be attached to this ground block as children.
+        RectTransform m_AttachTarget;
         
-        // In the original game, the gap depends on width of the obstacle, the speed, and a width of the field of view 
         int GetFramesGap (float minGapWidth)
         {
-            // Randomizing gap width, while also applying some additional scaling depending on current speed.
-            return Mathf.CeilToInt (GapCoefficient * minGapWidth * UnityEngine.Random.Range (1f, 1.3f));
+            // In the original game, the gap depends on width of the obstacle, the speed, and a width of the field of view 
+            // This method returns randomized gap width, and applies some scaling depending on current speed.
+            return Mathf.CeilToInt (GapCoefficient * minGapWidth * UnityEngine.Random.Range (1f, 1.5f));
         }
 
-        float GapCoefficient => 1;
-        
-        IEnumerable<ObjectSpawner> AvailableSpawners => m_Spawners.Where (spawner => spawner.RequiredSpeed <= m_Speed);
+        // Gap width coefficient. Reduces density of obstacles.
+        float GapCoefficient => Mathf.Sqrt(m_MaxSpeed / m_Speed);
         
         void Start ()
         {
@@ -42,7 +42,7 @@ namespace StansAssets.ProjectSample.Dino.Game
             m_FullGroundWidth = m_GroundBlocks.Sum (block => block.rect.width);
         }
 
-        // Returns level to default values
+        // Set default values
         public void Reset ()
         {
             m_Speed = m_InitialSpeed;
@@ -57,29 +57,31 @@ namespace StansAssets.ProjectSample.Dino.Game
         {
             if (!m_Running) return;
             
-            var scoreGain = m_ScoreFromSpeed * m_Speed;
-            OnScoreGained?.Invoke (scoreGain);
+            OnScoreGained?.Invoke (m_ScoreFromSpeed * m_Speed);
 
-            var distance = m_Speed * Time.fixedDeltaTime * Vector2.left;
+            var distance = m_Speed * Time.fixedDeltaTime * Vector3.left;
             for (int i = 0; i < m_GroundBlocks.Length; i++) {
                 m_GroundBlocks[i].Translate (distance);
-                if (m_GroundBlocks[i].transform.position.x < m_GroundRespawnPositionX) {
-                    m_GroundBlocks[i].Translate (new Vector3 (m_FullGroundWidth, 0));
-                    int nextBlockIndex = (i + 2) % m_GroundBlocks.Length;
-                    m_AttachTarget = m_GroundBlocks[nextBlockIndex];
-                }
+                if (m_GroundBlocks[i].transform.position.x < m_GroundRespawnPositionX) 
+                    RepositionGroundBlock (i);
             }
 
-            if (m_FramesBeforeSpawn-- <= 0) {
-                GetRandomObstacle ().transform.SetParent (m_AttachTarget); 
-            }
+            if (m_FramesBeforeSpawn-- <= 0) 
+                GetRandomObstacle ().transform.SetParent (m_AttachTarget);
 
             m_Speed = Mathf.Min (m_MaxSpeed, m_AccelerationPerFrame + m_Speed);
         }
 
+        void RepositionGroundBlock (int index)
+        {
+            m_GroundBlocks[index].Translate (new Vector3 (m_FullGroundWidth, 0));
+            int nextBlockIndex = (index + 2) % m_GroundBlocks.Length;
+            m_AttachTarget = m_GroundBlocks[nextBlockIndex];
+        }
+
         GameObject GetRandomObstacle ()
         {
-            var spawners = AvailableSpawners.ToArray ();
+            var spawners = m_Spawners.Where (spawner => spawner.RequiredSpeed <= m_Speed).ToArray ();
             var selectedSpawner = spawners[UnityEngine.Random.Range (0, spawners.Length)];
             m_FramesBeforeSpawn = GetFramesGap (selectedSpawner.RequiredSpace);
             return selectedSpawner.GetObject ();

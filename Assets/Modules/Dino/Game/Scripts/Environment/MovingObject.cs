@@ -8,66 +8,70 @@ namespace StansAssets.ProjectSample.Dino.Game
         [SerializeField] GameObject m_Visuals;
         [SerializeField] int m_ScoreForFullCycle = 250;
         [SerializeField] bool m_DisabledAtDay, m_DisabledAtNight;
+        [SerializeField] Rect m_Bounds;
 
-        float m_FullCycleLength;
         float m_MovementPerScorePoint;
-        float m_Counter;
         bool m_Active;
-        Vector3 m_InitialPosition;
         protected Image m_Image;
-        
-        bool Active { 
+
+        bool Active {
             get => m_Active;
             set {
                 if (m_Active != value) {
                     m_Active = value;
                     m_Visuals.SetActive (value);
                 }
-            } 
+            }
         }
 
-        protected float CycleProgress => m_Counter / m_ScoreForFullCycle;
-        
+        public Rect Bounds {
+            get => m_Bounds;
+            set => m_Bounds = value;
+        }
+
+        protected float CycleProgress => (m_Bounds.xMax - m_Visuals.transform.position.x) / m_Bounds.width;
+
         void Start ()
         {
-            var rectWidth = m_Visuals.GetComponent<RectTransform> ().rect.width;
-            m_FullCycleLength = Screen.width + 2 * rectWidth;
-            m_MovementPerScorePoint = m_FullCycleLength / m_ScoreForFullCycle;
+            m_MovementPerScorePoint = -m_Bounds.width / m_ScoreForFullCycle;
             m_Image = m_Visuals.GetComponent<Image> ();
-            m_InitialPosition = transform.localPosition;
-            
+
             var level = FindObjectOfType<DinoLevel> ();
             level.OnReset += Reset;
             level.OnScoreGained += AddScore;
 
             FindObjectOfType<TimeOfDay> ().OnDayTimeChange += HandleDayTimeChange;
-            Active = !m_DisabledAtDay;
         }
 
-        protected virtual void HandleDayTimeChange (bool value)
+        protected virtual void HandleDayTimeChange (bool isDay)
         {
-            Active = value 
-                         ? !m_DisabledAtDay 
-                         : !m_DisabledAtNight;
+            Active = isDay ? !m_DisabledAtDay : !m_DisabledAtNight;
         }
 
         protected virtual void Reset ()
         {
-            transform.localPosition = m_InitialPosition;
+            m_Visuals.transform.localPosition = Vector3.zero;
+            Active = !m_DisabledAtDay;
         }
 
         protected virtual void AddScore (float score)
         {
-            if (!Active) return;
-            
-            m_Counter += score;
-            if (m_Counter > m_ScoreForFullCycle) {
-                m_Counter -= m_ScoreForFullCycle;
-                transform.Translate (new Vector3 (m_FullCycleLength - score * m_MovementPerScorePoint, 0));
-            }
-            else {
-                transform.Translate (new Vector3 (-score * m_MovementPerScorePoint, 0));
-            }
+            if (!Active)
+                return;
+
+            var position = m_Visuals.transform.position;
+            var translation = new Vector3 (m_MovementPerScorePoint * score, 0);
+            if (position.x + translation.x < m_Bounds.xMin)
+                translation += GetRespawnTranslation (position);
+            m_Visuals.transform.Translate (translation);
+        }
+
+        Vector3 GetRespawnTranslation (Vector3 position)
+        {
+            // get random Y for a respawn position
+            var newY = Random.Range (m_Bounds.yMin, m_Bounds.yMax);
+            return new Vector3 (m_Bounds.width, newY - position.y);
         }
     }
 }
+
