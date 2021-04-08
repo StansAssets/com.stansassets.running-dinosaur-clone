@@ -14,16 +14,16 @@ namespace StansAssets.ProjectSample.Dino.Game
         [SerializeField] float m_JumpButtonHeldForce;
 
         // initial position of Dino is used as a respawn position
-        Vector3 m_SpawnPosition;
+        Vector2 m_SpawnPosition;
         // increases a height of jump if user holds the Jump button
         ConstantForce2D m_Force2D;
         DinoState m_State;
+        float m_AnimatorSpeed = 1;
         
         void Start ()
         {
             State = DinoState.Grounded;
-            m_SpawnPosition = transform.localPosition;
-            m_Rigidbody2D.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezeRotation;
+            m_SpawnPosition = m_Rigidbody2D.position;
 
             m_Force2D = m_Rigidbody2D.gameObject.AddComponent<ConstantForce2D> ();
             m_Force2D.force = Vector2.up * m_JumpButtonHeldForce;
@@ -48,8 +48,8 @@ namespace StansAssets.ProjectSample.Dino.Game
                         SetFrozen (true);
                         break;
                     case DinoState.WaitingForStart:
-                        transform.localPosition = m_SpawnPosition;
                         SetFrozen (true);
+                        m_Rigidbody2D.MovePosition (m_SpawnPosition);
                         break;
                     default: throw new ArgumentOutOfRangeException (nameof(value), value, null);
                 }
@@ -61,13 +61,21 @@ namespace StansAssets.ProjectSample.Dino.Game
 
         public void SetFrozen (bool frozen)
         {
-            //todo
+            if (frozen) {
+                m_Rigidbody2D.bodyType = RigidbodyType2D.Kinematic;
+                m_AnimatorSpeed = m_Animator.speed;
+                m_Animator.speed = 0;
+            }
+            else {
+                m_Animator.speed = m_AnimatorSpeed;
+                m_Rigidbody2D.bodyType = RigidbodyType2D.Dynamic;
+            }
         }
 
         void FixedUpdate ()
         {
             bool jumpInputPressed = Input.GetButton ("Jump") || Input.GetAxis ("Vertical") > 0.05f;
-            bool duckInputPressed = Input.GetAxis ("Vertical") < -0.05f;
+            bool duckInputPressed = Input.GetButton ("Crouch") || Input.GetAxis ("Vertical") < -0.05f;
 
             var setState = State;
             switch (State) {
@@ -93,8 +101,8 @@ namespace StansAssets.ProjectSample.Dino.Game
 
         void Jump ()
         {
-            m_Rigidbody2D.AddForce (m_InitialJumpImpulse, ForceMode2D.Impulse);
             m_Force2D.enabled = true;
+            m_Rigidbody2D.AddForce (m_InitialJumpImpulse, ForceMode2D.Impulse);
         }
 
         void OnCollisionEnter2D (Collision2D collision)

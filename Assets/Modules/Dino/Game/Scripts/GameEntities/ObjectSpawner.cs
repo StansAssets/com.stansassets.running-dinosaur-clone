@@ -8,7 +8,7 @@ namespace StansAssets.ProjectSample.Dino.Game
     {
         [SerializeField] GameObject m_ExampleObject;
         [SerializeField] int m_MinPositionX = -1000;
-        [SerializeField] float m_RequiredSpeed = 0;
+        [SerializeField] float m_RequiredSpeed;
         [SerializeField] float m_MinSpaceRequired = 100f;
 
         List<GameObject> m_ActiveObjects = new List<GameObject> ();
@@ -19,6 +19,11 @@ namespace StansAssets.ProjectSample.Dino.Game
         internal float RequiredSpeed => m_RequiredSpeed;
         // min space after the obstacle (in score points)
         internal float RequiredSpace => m_MinSpaceRequired;
+
+        void Start ()
+        {
+            m_ExampleObject.SetActive (false);
+        }
 
         void Update ()
         {
@@ -54,12 +59,13 @@ namespace StansAssets.ProjectSample.Dino.Game
             }
             else {
                 var newCopy = Instantiate (m_ExampleObject, GetSpawnPosition (), Quaternion.identity);
+                newCopy.SetActive (true);
                 m_ActiveObjects.Add (newCopy);
                 return newCopy;
             }
         }
 
-        internal void StashSpawnedObject (GameObject obj)
+        void StashSpawnedObject (GameObject obj)
         {
             if (m_ActiveObjects.Remove (obj)) {
                 m_StashedObjects.Push (obj);

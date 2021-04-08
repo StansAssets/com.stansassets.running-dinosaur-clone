@@ -3,9 +3,9 @@ using UnityEngine.UI;
 
 namespace StansAssets.ProjectSample.Dino.Game
 {
-    [RequireComponent (typeof(RectTransform)), RequireComponent (typeof(Image))]
     public class MovingObject : MonoBehaviour
     {
+        [SerializeField] GameObject m_Visuals;
         [SerializeField] int m_ScoreForFullCycle = 250;
         [SerializeField] bool m_DisabledAtDay, m_DisabledAtNight;
 
@@ -13,15 +13,15 @@ namespace StansAssets.ProjectSample.Dino.Game
         float m_MovementPerScorePoint;
         float m_Counter;
         bool m_Active;
-        protected Image m_Image;
         Vector3 m_InitialPosition;
+        protected Image m_Image;
         
         bool Active { 
             get => m_Active;
             set {
                 if (m_Active != value) {
                     m_Active = value;
-                    m_Image.enabled = value;
+                    m_Visuals.SetActive (value);
                 }
             } 
         }
@@ -30,10 +30,10 @@ namespace StansAssets.ProjectSample.Dino.Game
         
         void Start ()
         {
-            var rectWidth = GetComponent<RectTransform> ().rect.width;
+            var rectWidth = m_Visuals.GetComponent<RectTransform> ().rect.width;
             m_FullCycleLength = Screen.width + 2 * rectWidth;
             m_MovementPerScorePoint = m_FullCycleLength / m_ScoreForFullCycle;
-            m_Image = GetComponent<Image> ();
+            m_Image = m_Visuals.GetComponent<Image> ();
             m_InitialPosition = transform.localPosition;
             
             var level = FindObjectOfType<DinoLevel> ();
@@ -41,6 +41,7 @@ namespace StansAssets.ProjectSample.Dino.Game
             level.OnScoreGained += AddScore;
 
             FindObjectOfType<TimeOfDay> ().OnDayTimeChange += HandleDayTimeChange;
+            Active = !m_DisabledAtDay;
         }
 
         protected virtual void HandleDayTimeChange (bool value)

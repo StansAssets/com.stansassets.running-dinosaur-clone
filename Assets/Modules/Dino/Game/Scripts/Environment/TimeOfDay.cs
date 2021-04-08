@@ -12,7 +12,7 @@ namespace StansAssets.ProjectSample.Dino.Game
         bool m_IsDay;
         float m_TimeOfDayLength, m_TimeOfDayRemaining;
 
-        public void ScoreGained (float score)
+        void ScoreGained (float score)
         {
             m_TimeOfDayRemaining -= score;
             if (m_TimeOfDayRemaining <= 0) {

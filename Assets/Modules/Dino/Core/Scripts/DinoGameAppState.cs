@@ -100,9 +100,10 @@ namespace StansAssets.ProjectSample.Dino
                                                       };
 
                                                       manager.OnRestart += () => {
-                                                          m_SceneService.Unload (endGameSceneName, () => { });
-                                                          UnpauseGame ();
-                                                          m_DinoGame.Restart ();
+                                                          m_SceneService.Unload (endGameSceneName, () => { 
+                                                              UnpauseGame ();
+                                                              m_DinoGame.Restart ();
+                                                          });
                                                       };
                                                   });
         }

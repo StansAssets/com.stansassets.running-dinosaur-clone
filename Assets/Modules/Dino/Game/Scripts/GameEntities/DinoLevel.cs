@@ -1,9 +1,7 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using UnityEngine;
-using Object = UnityEngine.Object;
 
 namespace StansAssets.ProjectSample.Dino.Game
 {
@@ -36,7 +34,6 @@ namespace StansAssets.ProjectSample.Dino.Game
             return Mathf.CeilToInt (GapCoefficient * baseFramesGap * UnityEngine.Random.Range (1f, 1.3f));
         }
 
-        // todo
         float GapCoefficient => 1;
         
         IEnumerable<ObjectSpawner> AvailableSpawners => m_Spawners.Where (spawner => spawner.RequiredSpeed <= m_Speed);
