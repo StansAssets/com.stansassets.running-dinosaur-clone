@@ -9,33 +9,34 @@ namespace StansAssets.ProjectSample.Dino.Game
         [SerializeField] GameObject m_ExampleObject;
         [SerializeField] int m_MinPositionX = -1000;
         [SerializeField] float m_RequiredSpeed;
-        [SerializeField] float m_MinSpaceRequired = 100f;
+        [SerializeField] float m_MinFramesGap = 50;
 
-        List<GameObject> m_ActiveObjects = new List<GameObject> ();
+        readonly List<GameObject> m_ActiveObjects = new List<GameObject> ();
         readonly Stack<GameObject> m_StashedObjects = new Stack<GameObject> ();
 
         protected Vector3 GetSpawnPosition () => transform.position;
         // min speed required to spawn this type of obstacles
         internal float RequiredSpeed => m_RequiredSpeed;
         // min space after the obstacle (in score points)
-        internal float RequiredSpace => m_MinSpaceRequired;
+        internal float RequiredSpace => m_MinFramesGap;
 
         void Start ()
         {
             m_ExampleObject.SetActive (false);
         }
 
-        void Update ()
+        void FixedUpdate ()
         {
-            var remainingActiveObjects = new List<GameObject> ();
-            foreach (var obj in m_ActiveObjects) {
-                // todo remove hax
-                if (obj.transform.position.x > m_MinPositionX && obj.transform.position.x <= m_MinPositionX)
-                    StashSpawnedObject (obj);
-                else { remainingActiveObjects.Add (obj); }
+            var toRemove = m_ActiveObjects.Where (OutOfValidRange).ToList ();
+            foreach (var obj in toRemove) {
+                StashSpawnedObject (obj);
             }
+        }
 
-            m_ActiveObjects = remainingActiveObjects;
+        bool OutOfValidRange (GameObject obj)
+        {
+            float positionX = obj.transform.position.x;
+            return positionX < m_MinPositionX || positionX > 2500;
         }
 
         public void Reset ()
@@ -54,6 +55,7 @@ namespace StansAssets.ProjectSample.Dino.Game
             if (m_StashedObjects.Any ()) {
                 var result = m_StashedObjects.Pop ().gameObject;
                 result.SetActive (true);
+                m_ActiveObjects.Add (result);
                 result.transform.SetPositionAndRotation (GetSpawnPosition (), Quaternion.identity);
                 return result;
             }
@@ -69,8 +71,9 @@ namespace StansAssets.ProjectSample.Dino.Game
         {
             if (m_ActiveObjects.Remove (obj)) {
                 m_StashedObjects.Push (obj);
-                obj.gameObject.SetActive (false);
-                obj.transform.SetParent (transform.parent);
+                obj.transform.SetParent (transform);
+                obj.SetActive (false);
+                obj.transform.localPosition = Vector3.zero;
             }
         }
     }

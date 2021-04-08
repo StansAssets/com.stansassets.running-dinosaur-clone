@@ -27,11 +27,8 @@ namespace StansAssets.ProjectSample.Dino.Game
         // In the original game, the gap depends on width of the obstacle, the speed, and a width of the field of view 
         int GetFramesGap (float minGapWidth)
         {
-            // Number of frames required to cover the min gap, while moving with a current speed
-            var baseFramesGap = minGapWidth / (m_Speed * m_ScoreFromSpeed);
             // Randomizing gap width, while also applying some additional scaling depending on current speed.
-            // As a result, the frames gap between obstacles is more or less the same value. 
-            return Mathf.CeilToInt (GapCoefficient * baseFramesGap * UnityEngine.Random.Range (1f, 1.3f));
+            return Mathf.CeilToInt (GapCoefficient * minGapWidth * UnityEngine.Random.Range (1f, 1.3f));
         }
 
         float GapCoefficient => 1;
@@ -41,7 +38,7 @@ namespace StansAssets.ProjectSample.Dino.Game
         void Start ()
         {
             m_Spawners = FindObjectsOfType<ObjectSpawner> ();
-            m_AttachTarget = m_GroundBlocks[0];
+            m_AttachTarget = m_GroundBlocks[1];
             m_FullGroundWidth = m_GroundBlocks.Sum (block => block.rect.width);
         }
 
@@ -68,32 +65,24 @@ namespace StansAssets.ProjectSample.Dino.Game
                 m_GroundBlocks[i].Translate (distance);
                 if (m_GroundBlocks[i].transform.position.x < m_GroundRespawnPositionX) {
                     m_GroundBlocks[i].Translate (new Vector3 (m_FullGroundWidth, 0));
-                    int nextBlockIndex = (i + 1) % m_GroundBlocks.Length;
+                    int nextBlockIndex = (i + 2) % m_GroundBlocks.Length;
                     m_AttachTarget = m_GroundBlocks[nextBlockIndex];
                 }
             }
 
-            if (MaybeSpawnObstacle (out var obstacle))
-                obstacle.SetParent (m_AttachTarget);
+            if (m_FramesBeforeSpawn-- <= 0) {
+                GetRandomObstacle ().transform.SetParent (m_AttachTarget); 
+            }
 
             m_Speed = Mathf.Min (m_MaxSpeed, m_AccelerationPerFrame + m_Speed);
-        }
-
-        bool MaybeSpawnObstacle (out Transform obstacle)
-        {
-            bool spawned = m_FramesBeforeSpawn-- <= 0;
-            obstacle = spawned ? GetRandomObstacle ().transform : null;
-            return spawned;
         }
 
         GameObject GetRandomObstacle ()
         {
             var spawners = AvailableSpawners.ToArray ();
-            var selectedSpawner = spawners[UnityEngine.Random.Range (0, spawners.Length - 1)];
-            var result = selectedSpawner.GetObject ();
-            result.SetActive (true);
+            var selectedSpawner = spawners[UnityEngine.Random.Range (0, spawners.Length)];
             m_FramesBeforeSpawn = GetFramesGap (selectedSpawner.RequiredSpace);
-            return result;
+            return selectedSpawner.GetObject ();
         }
     }
 }

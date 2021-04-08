@@ -146,7 +146,7 @@ PrefabInstance:
     - target: {fileID: 5439737288656305725, guid: 5cf5ed1d1b21c3d428e93ab1699f7341,
         type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5439737288656305725, guid: 5cf5ed1d1b21c3d428e93ab1699f7341,
         type: 3}
@@ -414,9 +414,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ExampleObject: {fileID: 1226652299}
-  m_MinPositionX: -3000
-  m_RequiredSpeed: 150
-  m_MinSpaceRequired: 220
+  m_MinPositionX: -50
+  m_RequiredSpeed: 1100
+  m_MinFramesGap: 60
 --- !u!1 &396285724
 GameObject:
   m_ObjectHideFlags: 0
@@ -737,9 +737,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ExampleObject: {fileID: 877769389}
-  m_MinPositionX: -3000
-  m_RequiredSpeed: 150
-  m_MinSpaceRequired: 220
+  m_MinPositionX: -50
+  m_RequiredSpeed: 1100
+  m_MinFramesGap: 60
 --- !u!1 &814490493
 GameObject:
   m_ObjectHideFlags: 0
@@ -790,9 +790,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ExampleObject: {fileID: 2188845}
-  m_MinPositionX: -3000
-  m_RequiredSpeed: 250
-  m_MinSpaceRequired: 220
+  m_MinPositionX: -50
+  m_RequiredSpeed: 1300
+  m_MinFramesGap: 60
 --- !u!1001 &825247107
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -943,7 +943,7 @@ PrefabInstance:
     - target: {fileID: 5439737288656305725, guid: 5cf5ed1d1b21c3d428e93ab1699f7341,
         type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5439737288656305725, guid: 5cf5ed1d1b21c3d428e93ab1699f7341,
         type: 3}
@@ -1058,7 +1058,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 973113048}
-  - component: {fileID: 973113052}
   - component: {fileID: 973113050}
   - component: {fileID: 973113049}
   - component: {fileID: 973113051}
@@ -1158,27 +1157,6 @@ PolygonCollider2D:
       - {x: -10.432301, y: 151.82346}
       - {x: -38.871258, y: 111.77119}
       - {x: -36.695835, y: 43.773613}
---- !u!50 &973113052
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 973113047}
-  m_BodyType: 1
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 4
 --- !u!1 &1163323482
 GameObject:
   m_ObjectHideFlags: 0
@@ -1720,9 +1698,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ExampleObject: {fileID: 973113047}
-  m_MinPositionX: -3000
+  m_MinPositionX: -50
   m_RequiredSpeed: 0
-  m_MinSpaceRequired: 250
+  m_MinFramesGap: 50
 --- !u!1 &1575494549
 GameObject:
   m_ObjectHideFlags: 0
@@ -1957,9 +1935,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ExampleObject: {fileID: 544470900483521478}
-  m_MinPositionX: -3000
+  m_MinPositionX: -50
   m_RequiredSpeed: 0
-  m_MinSpaceRequired: 250
+  m_MinFramesGap: 50
 --- !u!1 &1768079059
 GameObject:
   m_ObjectHideFlags: 0
@@ -2107,7 +2085,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_InitialSpeed: 800
-  m_MaxSpeed: 3500
+  m_MaxSpeed: 2000
   m_AccelerationPerFrame: 0.2
   m_ScoreFromSpeed: 0.0005
   m_GroundBlocks:
@@ -2217,27 +2195,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!50 &521421785024566238
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 544470900483521478}
-  m_BodyType: 1
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 4
 --- !u!1 &544470900483521478
 GameObject:
   m_ObjectHideFlags: 0
@@ -2247,7 +2204,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 544470900483521479}
-  - component: {fileID: 521421785024566238}
   - component: {fileID: 544470900483521482}
   - component: {fileID: 544470900483521481}
   - component: {fileID: 544470900483521480}

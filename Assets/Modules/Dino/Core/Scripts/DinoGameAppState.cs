@@ -34,7 +34,7 @@ namespace StansAssets.ProjectSample.Dino
                                                () => {
                                                    var gamePlayScene = m_SceneActionsQueue.GetLoadedScene (k_GamePlaySceneName);
                                                    m_DinoGame = new DinoGame (gamePlayScene);
-                                                   m_DinoGame.OnGameOver += () => ShowEndGameScreen (k_EndGameUISceneName);
+                                                   m_DinoGame.OnGameOver += ShowEndGameScreen;
                                                    progressReporter.SetDone ();
                                                    m_DinoGame.Start ();
                                                });
@@ -88,19 +88,19 @@ namespace StansAssets.ProjectSample.Dino
             m_DinoGame.Pause (false);
         }
 
-        void ShowEndGameScreen (string endGameSceneName)
+        void ShowEndGameScreen ()
         {
             PauseGame ();
             m_SceneService.Load<IDinoEndGameUI> (
-                                                  sceneName: endGameSceneName,
-                                                  onComplete: (scene, manager) => {
+                                                  k_EndGameUISceneName,
+                                                  (scene, manager) => {
                                                       manager.OnMainMenu += () => {
-                                                          m_SceneService.Unload (endGameSceneName, () => { });
+                                                          m_SceneService.Unload (k_EndGameUISceneName, () => { });
                                                           App.State.Set (AppState.MainMenu);
                                                       };
 
                                                       manager.OnRestart += () => {
-                                                          m_SceneService.Unload (endGameSceneName, () => { 
+                                                          m_SceneService.Unload (k_EndGameUISceneName, () => { 
                                                               UnpauseGame ();
                                                               m_DinoGame.Restart ();
                                                           });
