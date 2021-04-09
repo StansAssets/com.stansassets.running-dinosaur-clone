@@ -35,13 +35,13 @@ namespace StansAssets.ProjectSample.Dino
                 m_DinoLevel.Reset ();
                 m_DinoLevel.SetLevelActive (true);
                 m_DinoCharacter.State = DinoState.Grounded;
+                m_DinoCharacter.SetFrozen (false);
             };
             
         }
 
         internal void Restart ()
         {
-            OnGameOver?.Invoke ();
             OnStart?.Invoke ();
         }
 

@@ -20,10 +20,12 @@ namespace StansAssets.ProjectSample.Dino.Game
         bool m_Running;
         float m_Speed;
         int m_FramesBeforeSpawn;
-        IReadOnlyList<ObjectSpawner> m_Spawners;
+        ObjectSpawner[] m_Spawners;
         float m_FullGroundWidth;
         // New spawned obstacles will be attached to this ground block as children.
         RectTransform m_AttachTarget;
+
+        IReadOnlyList<ObjectSpawner> Spawners => m_Spawners ?? (m_Spawners = FindObjectsOfType<ObjectSpawner> ());
         
         int GetFramesGap (float minGapWidth)
         {
@@ -37,7 +39,6 @@ namespace StansAssets.ProjectSample.Dino.Game
         
         void Start ()
         {
-            m_Spawners = FindObjectsOfType<ObjectSpawner> ();
             m_AttachTarget = m_GroundBlocks[1];
             m_FullGroundWidth = m_GroundBlocks.Sum (block => block.rect.width);
         }
@@ -47,6 +48,9 @@ namespace StansAssets.ProjectSample.Dino.Game
         {
             m_Speed = m_InitialSpeed;
             m_FramesBeforeSpawn = m_SpawnNothingForFirstFrames;
+            foreach (var spawner in Spawners) {
+                spawner.Reset ();
+            }
             OnReset?.Invoke ();
         }
 
@@ -81,7 +85,7 @@ namespace StansAssets.ProjectSample.Dino.Game
 
         GameObject GetRandomObstacle ()
         {
-            var spawners = m_Spawners.Where (spawner => spawner.RequiredSpeed <= m_Speed).ToArray ();
+            var spawners = Spawners.Where (spawner => spawner.RequiredSpeed <= m_Speed).ToArray ();
             var selectedSpawner = spawners[UnityEngine.Random.Range (0, spawners.Length)];
             m_FramesBeforeSpawn = GetFramesGap (selectedSpawner.RequiredSpace);
             return selectedSpawner.GetObject ();

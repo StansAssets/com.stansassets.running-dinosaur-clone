@@ -18,7 +18,6 @@ namespace StansAssets.ProjectSample.Dino.Game
         // increases a height of jump if user holds the Jump button
         ConstantForce2D m_Force2D;
         DinoState m_State;
-        float m_AnimatorSpeed = 1;
         
         void Start ()
         {
@@ -61,15 +60,8 @@ namespace StansAssets.ProjectSample.Dino.Game
 
         public void SetFrozen (bool frozen)
         {
-            if (frozen) {
-                m_Rigidbody2D.bodyType = RigidbodyType2D.Kinematic;
-                m_AnimatorSpeed = m_Animator.speed;
-                m_Animator.speed = 0;
-            }
-            else {
-                m_Animator.speed = m_AnimatorSpeed;
-                m_Rigidbody2D.bodyType = RigidbodyType2D.Dynamic;
-            }
+            m_Rigidbody2D.bodyType = frozen ? RigidbodyType2D.Kinematic : RigidbodyType2D.Dynamic;
+            m_Animator.speed = frozen ? 0 : 1;
         }
 
         void FixedUpdate ()
@@ -86,7 +78,9 @@ namespace StansAssets.ProjectSample.Dino.Game
                         setState = DinoState.Ducking; 
                     break;
                 case DinoState.Ducking:
-                    if (!duckInputPressed)
+                    if (jumpInputPressed) 
+                        setState = DinoState.Jumping;
+                    else if (!duckInputPressed)
                         setState = DinoState.Grounded;
                     break;
                 case DinoState.Jumping:
@@ -107,10 +101,11 @@ namespace StansAssets.ProjectSample.Dino.Game
 
         void OnCollisionEnter2D (Collision2D collision)
         {
-            if (collision.gameObject.CompareTag ("Player"))
-                State = DinoState.Grounded;
-            else
-                OnHit?.Invoke ();
+            if (collision.gameObject.CompareTag ("Player")) {
+                if (State == DinoState.Jumping)
+                    State = DinoState.Grounded;
+            }
+            else { OnHit?.Invoke (); }
         }
 
         string GetAnimationName ()

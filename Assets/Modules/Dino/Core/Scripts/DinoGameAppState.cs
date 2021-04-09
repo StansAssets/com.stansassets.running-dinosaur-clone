@@ -4,6 +4,7 @@ using StansAssets.ProjectSample.Boxes.EndGameUI;
 using StansAssets.ProjectSample.Boxes.PauseUI;
 using StansAssets.ProjectSample.Core;
 using StansAssets.SceneManagement;
+using UnityEngine;
 
 namespace StansAssets.ProjectSample.Dino
 {
@@ -12,7 +13,7 @@ namespace StansAssets.ProjectSample.Dino
     {
         const string k_GamePlaySceneName = "DinoGame";
         const string k_PauseUISceneName = "DinoPauseUI";
-        const string k_EndGameUISceneName = "DinoEndGameUI";
+        const string k_GameOverUISceneName = "DinoGameOverUI";
 
         readonly ISceneService m_SceneService;
 
@@ -92,20 +93,31 @@ namespace StansAssets.ProjectSample.Dino
         {
             PauseGame ();
             m_SceneService.Load<IDinoEndGameUI> (
-                                                  k_EndGameUISceneName,
+                                                  k_GameOverUISceneName,
                                                   (scene, manager) => {
+                                                      Debug.Assert (manager != null);
                                                       manager.OnMainMenu += () => {
-                                                          m_SceneService.Unload (k_EndGameUISceneName, () => { });
+                                                          m_SceneService.Unload (k_GameOverUISceneName, () => { });
                                                           App.State.Set (AppState.MainMenu);
                                                       };
 
-                                                      manager.OnRestart += () => {
-                                                          m_SceneService.Unload (k_EndGameUISceneName, () => { 
-                                                              UnpauseGame ();
-                                                              m_DinoGame.Restart ();
-                                                          });
-                                                      };
+                                                      manager.OnRestart += ReloadScene;
                                                   });
+        }
+
+        void ReloadScene ()
+        {
+            try {
+                m_SceneService.Unload (
+                                       k_GameOverUISceneName,
+                                       () => {
+                                           UnpauseGame ();
+                                           m_DinoGame.Restart ();
+                                       });
+            }
+            catch (Exception e) {
+                Debug.LogError (e);
+            }
         }
     }
 }
