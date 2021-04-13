@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 namespace StansAssets.ProjectSample.Dino.Game
 {
-    public class MovingObject : MonoBehaviour
+    public class MovingObject : ScreenSizeDependent
     {
         [SerializeField] GameObject m_Visuals;
         [SerializeField] int m_ScoreForFullCycle = 250;
@@ -71,6 +71,11 @@ namespace StansAssets.ProjectSample.Dino.Game
             // get random Y for a respawn position
             var newY = Random.Range (m_Bounds.yMin, m_Bounds.yMax);
             return new Vector3 (m_Bounds.width, newY - position.y);
+        }
+
+        public override void UpdateScreenWidth(int screenWidthDelta)
+        {
+            m_Bounds.width += screenWidthDelta;
         }
     }
 }

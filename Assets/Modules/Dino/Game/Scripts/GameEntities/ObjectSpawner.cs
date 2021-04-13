@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace StansAssets.ProjectSample.Dino.Game
 {
-    public class ObjectSpawner : MonoBehaviour
+    public class ObjectSpawner : ScreenSizeDependent
     {
         [SerializeField] GameObject m_ExampleObject;
         [SerializeField] int m_MinPositionX = -1000;
@@ -13,7 +13,6 @@ namespace StansAssets.ProjectSample.Dino.Game
         [SerializeField] float m_MinFramesGap = 50;
 
         PrefabPool m_Pool;
-        
         readonly List<GameObject> m_ActiveObjects = new List<GameObject>();
 
         protected Vector3 GetSpawnPosition() => transform.position;
@@ -31,8 +30,10 @@ namespace StansAssets.ProjectSample.Dino.Game
         void FixedUpdate()
         {
             var toRemove = m_ActiveObjects.Where(OutOfValidRange).ToList();
-            foreach (var obj in toRemove) 
+            foreach (var obj in toRemove) {
                 m_Pool.Release(obj);
+                m_ActiveObjects.Remove(obj);
+            }
         }
 
         bool OutOfValidRange(GameObject obj)
@@ -57,6 +58,11 @@ namespace StansAssets.ProjectSample.Dino.Game
             result.SetActive(true);
             result.transform.SetPositionAndRotation(GetSpawnPosition(), Quaternion.identity);
             return result;
+        }
+
+        public override void UpdateScreenWidth(int screenWidthDelta)
+        {
+            // current implementation requires no resizing
         }
     }
 }
