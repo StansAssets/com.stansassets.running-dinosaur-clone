@@ -1,7 +1,9 @@
-﻿
-using System;
+﻿using System;
 
-public interface IPlatformInput
+namespace StansAssets.ProjectSample.Controls
 {
-    event Action<string> OnPressed, OnReleased;
+    public interface IPlatformInput
+    {
+        event Action<string> OnPressed, OnReleased;
+    }
 }

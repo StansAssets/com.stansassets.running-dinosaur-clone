@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using StansAssets.ProjectSample.Controls;
 
 namespace StansAssets.ProjectSample.Dino.Game
 {

@@ -16,6 +16,7 @@ namespace StansAssets.ProjectSample.Dino.Game
         [SerializeField] float m_GroundRespawnPositionX;
         // The game is expected to run at 60 FPS
         [SerializeField] int m_SpawnNothingForFirstFrames = 30;
+        [SerializeField] Tutorial m_Tutorial;
 
         bool m_Running;
         float m_Speed;
@@ -51,6 +52,11 @@ namespace StansAssets.ProjectSample.Dino.Game
             foreach (var spawner in Spawners) {
                 spawner.Reset ();
             }
+#if UNITY_EDITOR || UNITY_STANDALONE
+            m_Tutorial.Hide();
+#else 
+            m_Tutorial.Show();
+#endif
             OnReset?.Invoke ();
         }
 
