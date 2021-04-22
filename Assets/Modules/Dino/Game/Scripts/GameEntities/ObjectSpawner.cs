@@ -48,7 +48,7 @@ namespace StansAssets.ProjectSample.Dino.Game
                 m_Pool.Release(obj);
 
             m_ActiveObjects.Clear();
-            m_Pool.Clear();
+            m_Pool?.Clear();
         }
 
         public GameObject GetObject()

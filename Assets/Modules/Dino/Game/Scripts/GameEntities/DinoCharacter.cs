@@ -12,11 +12,11 @@ namespace StansAssets.ProjectSample.Dino.Game
         [SerializeField] Rigidbody2D m_Rigidbody2D;
         [SerializeField] Vector2 m_InitialJumpImpulse;
         [SerializeField] float m_JumpButtonHeldForce;
+        [SerializeField] ConstantForce2D m_Force2D;
 
         // initial position of Dino is used as a respawn position
         Vector2 m_SpawnPosition;
         // increases a height of jump if user holds the Jump button
-        ConstantForce2D m_Force2D;
         DinoState m_State;
         
         void Start ()
@@ -24,9 +24,31 @@ namespace StansAssets.ProjectSample.Dino.Game
             State = DinoState.Grounded;
             m_SpawnPosition = m_Rigidbody2D.position;
 
-            m_Force2D = m_Rigidbody2D.gameObject.AddComponent<ConstantForce2D> ();
             m_Force2D.force = Vector2.up * m_JumpButtonHeldForce;
             m_Force2D.enabled = false;
+
+            var inputs = FindObjectOfType<InputControl>();
+            inputs.Subscribe("Jump",
+                             jumpPressed => {
+                                 if (jumpPressed) {
+                                     if (State != DinoState.Jumping)
+                                         State = DinoState.Jumping;
+                                 }
+                                 else {
+                                     m_Force2D.enabled = false;
+                                 }
+                             });
+            inputs.Subscribe("Duck",
+                             duckingPressed => {
+                                 if (duckingPressed) {
+                                     if (State == DinoState.Grounded)
+                                         State = DinoState.Ducking;
+                                 }
+                                 else {
+                                     if (State == DinoState.Ducking)
+                                         State = DinoState.Grounded;
+                                 }
+                             });
         }
 
 
@@ -38,10 +60,12 @@ namespace StansAssets.ProjectSample.Dino.Game
                 switch (value) {
                     case DinoState.Jumping:
                         m_JumpAudioSource.Play ();
-                        Jump ();
+                        m_Force2D.enabled = true;
+                        m_Rigidbody2D.AddForce (m_InitialJumpImpulse, ForceMode2D.Impulse);
                         break;
                     case DinoState.Ducking:
-                    case DinoState.Grounded: 
+                    case DinoState.Grounded:
+                        m_Force2D.enabled = false;
                         break;
                     case DinoState.Dead: 
                         SetFrozen (true);
@@ -62,41 +86,6 @@ namespace StansAssets.ProjectSample.Dino.Game
         {
             m_Rigidbody2D.bodyType = frozen ? RigidbodyType2D.Kinematic : RigidbodyType2D.Dynamic;
             m_Animator.speed = frozen ? 0 : 1;
-        }
-
-        void FixedUpdate ()
-        {
-            bool jumpInputPressed = Input.GetButton ("Jump") || Input.GetAxis ("Vertical") > 0.05f;
-            bool duckInputPressed = Input.GetButton ("Crouch") || Input.GetAxis ("Vertical") < -0.05f;
-
-            var setState = State;
-            switch (State) {
-                case DinoState.Grounded:
-                    if (jumpInputPressed) 
-                        setState = DinoState.Jumping; 
-                    else if (duckInputPressed)  
-                        setState = DinoState.Ducking; 
-                    break;
-                case DinoState.Ducking:
-                    if (jumpInputPressed) 
-                        setState = DinoState.Jumping;
-                    else if (!duckInputPressed)
-                        setState = DinoState.Grounded;
-                    break;
-                case DinoState.Jumping:
-                    if (!jumpInputPressed
-                     && !m_Force2D.enabled)
-                        m_Force2D.enabled = false;
-                    break;
-            }
-
-            State = setState;
-        }
-
-        void Jump ()
-        {
-            m_Force2D.enabled = true;
-            m_Rigidbody2D.AddForce (m_InitialJumpImpulse, ForceMode2D.Impulse);
         }
 
         void OnCollisionEnter2D (Collision2D collision)
