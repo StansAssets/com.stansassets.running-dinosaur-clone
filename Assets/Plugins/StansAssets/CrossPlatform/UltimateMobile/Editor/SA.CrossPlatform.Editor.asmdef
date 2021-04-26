@@ -1,0 +1,37 @@
+{
+    "name": "SA.CrossPlatform.Editor",
+    "references": [
+        "SA.CrossPlatform",
+        "SA.Foundation",
+        "SA.Foundation.Editor",
+        "SA.iOS",
+        "SA.iOS.Editor",
+        "SA.iOS.XCode",
+        "SA.iOS.XCode.Editor",
+        "SA.Android",
+        "SA.Android.Editor",
+        "SA.Android.Manifest",
+        "SA.Android.Manifest.Editor",
+        "StansAssets.Foundation",
+        "StansAssets.Foundation.Editor",
+        "StansAssets.Plugins.Editor",
+        "StansAssets.Facebook.Editor"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [
+        {
+            "name": "com.stansassets.facebook",
+            "expression": "1.0.0",
+            "define": "SA_FACEBOOK"
+        }
+    ],
+    "noEngineReferences": false
+}

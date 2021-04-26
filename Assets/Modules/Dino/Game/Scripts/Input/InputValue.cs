@@ -2,25 +2,28 @@ using System;
 
 namespace StansAssets.ProjectSample.Controls
 {
-    struct InputValue
+    class InputValue
     {
         public readonly string Name;
         readonly Func<bool> m_GetInputValueFunc;
+
+        bool m_CurrentValue;
 
         public InputValue(string name, Func<bool> getValueFunc)
         {
             Name = name;
             m_GetInputValueFunc = getValueFunc;
-            Value = false;
+            m_CurrentValue = m_GetInputValueFunc();
         }
 
-        public bool Value { get; private set; }
-
-        public bool HasChanged()
+        public bool? GetChangedValue()
         {
-            var currentValue = Value;
-            Value = m_GetInputValueFunc();
-            return currentValue != Value;
+            var value = m_GetInputValueFunc();
+            if (m_CurrentValue == value)
+                return null;
+
+            m_CurrentValue = value;
+            return value;
         }
     }
 }

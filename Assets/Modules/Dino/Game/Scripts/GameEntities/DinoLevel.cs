@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using StansAssets.ProjectSample.InApps;
 using UnityEngine;
 
 namespace StansAssets.ProjectSample.Dino.Game
@@ -19,7 +20,7 @@ namespace StansAssets.ProjectSample.Dino.Game
         [SerializeField] Tutorial m_Tutorial;
 
         bool m_Running;
-        float m_Speed;
+        float m_Speed, m_Score;
         int m_FramesBeforeSpawn;
         ObjectSpawner[] m_Spawners;
         float m_FullGroundWidth;
@@ -27,6 +28,7 @@ namespace StansAssets.ProjectSample.Dino.Game
         RectTransform m_AttachTarget;
 
         IReadOnlyList<ObjectSpawner> Spawners => m_Spawners ?? (m_Spawners = FindObjectsOfType<ObjectSpawner> ());
+        public int Score => Mathf.RoundToInt(m_Score);
         
         int GetFramesGap (float minGapWidth)
         {
@@ -42,11 +44,13 @@ namespace StansAssets.ProjectSample.Dino.Game
         {
             m_AttachTarget = m_GroundBlocks[1];
             m_FullGroundWidth = m_GroundBlocks.Sum (block => block.rect.width);
+            OnScoreGained += (value) => m_Score += value;
         }
 
         // Set default values
         public void Reset ()
         {
+            m_Score = 0;
             m_Speed = m_InitialSpeed;
             m_FramesBeforeSpawn = m_SpawnNothingForFirstFrames;
             foreach (var spawner in Spawners) {

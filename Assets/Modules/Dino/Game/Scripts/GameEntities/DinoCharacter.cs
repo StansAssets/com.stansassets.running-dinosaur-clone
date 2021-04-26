@@ -70,6 +70,7 @@ namespace StansAssets.ProjectSample.Dino.Game
                         break;
                     case DinoState.Dead: 
                         SetFrozen (true);
+                        m_Rigidbody2D.velocity = Vector2.zero;
                         break;
                     case DinoState.WaitingForStart:
                         SetFrozen (true);

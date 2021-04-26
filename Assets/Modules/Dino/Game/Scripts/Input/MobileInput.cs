@@ -13,7 +13,7 @@ namespace StansAssets.ProjectSample.Controls
 #if UNITY_EDITOR || UNITY_STANDALONE
         void Start()
         {
-            gameObject.SetActive(false);
+            //gameObject.SetActive(false);
         }
 #endif
 

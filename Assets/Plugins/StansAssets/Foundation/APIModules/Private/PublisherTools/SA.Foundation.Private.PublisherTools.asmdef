@@ -1,0 +1,28 @@
+{
+    "name": "SA.Foundation.Private.PublisherTools",
+    "references": [
+        "SA.Foundation",
+        "SA.Android.Editor",
+        "SA.iOS.Editor",
+        "SA.CrossPlatform",
+        "SA.Android.Manifest",
+        "SA.iOS.XCode",
+        "SA.Foundation.Editor",
+        "SA.Android.Manifest.Editor",
+        "SA.Android",
+        "SA.iOS",
+        "StansAssets.Foundation",
+        "StansAssets.Plugins.Editor"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

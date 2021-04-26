@@ -1,0 +1,17 @@
+{
+    "name": "StansAssets.SampleProject.InApps",
+    "references": [
+        "GUID:5b31e461925be0e4096613f091efd54e",
+        "GUID:68dcdd92efcfdc84898218413eb49bec",
+        "GUID:f3af174804a485643a32e061a90ef9f7"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

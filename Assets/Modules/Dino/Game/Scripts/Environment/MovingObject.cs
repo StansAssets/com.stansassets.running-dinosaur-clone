@@ -1,3 +1,4 @@
+using StansAssets.ProjectSample.InApps;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,6 +10,7 @@ namespace StansAssets.ProjectSample.Dino.Game
         [SerializeField] int m_ScoreForFullCycle = 250;
         [SerializeField] bool m_DisabledAtDay, m_DisabledAtNight;
         [SerializeField] Rect m_Bounds;
+        [SerializeField] GameObject m_PremiumVisuals;
 
         float m_MovementPerScorePoint;
         bool m_Active;
@@ -41,6 +43,9 @@ namespace StansAssets.ProjectSample.Dino.Game
             level.OnScoreGained += AddScore;
 
             FindObjectOfType<TimeOfDay> ().OnDayTimeChange += HandleDayTimeChange;
+            
+            if (m_PremiumVisuals)
+                m_PremiumVisuals.SetActive(RewardManager.HasPremium);
         }
 
         protected virtual void HandleDayTimeChange (bool isDay)

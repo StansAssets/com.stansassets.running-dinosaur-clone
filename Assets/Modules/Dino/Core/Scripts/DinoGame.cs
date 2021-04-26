@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using StansAssets.Foundation.Extensions;
 using StansAssets.ProjectSample.Dino.Game;
 using UnityEngine.SceneManagement;
 using StansAssets.ProjectSample.Core;
 using UnityEngine;
+using SA.CrossPlatform.Analytics;
 
 namespace StansAssets.ProjectSample.Dino
 {
@@ -21,11 +23,14 @@ namespace StansAssets.ProjectSample.Dino
         {
             m_DinoCharacter = targetScene.GetComponentInChildren<DinoCharacter>();
             m_DinoCharacter.OnHit += () => OnGameOver?.Invoke();
-            OnGameOver += () => m_DinoCharacter.State = DinoState.Dead;
+            OnGameOver += () => {
+                m_DinoCharacter.State = DinoState.Dead;
+                var details = new Dictionary<string, object>();
+                details.Add("Score", m_DinoLevel.Score);
+                UM_AnalyticsService.Client.Event("GameOver", details);
+            };
             
             m_DinoLevel = targetScene.GetComponentInChildren<DinoLevel>();
-            // in would be nice to load/unload related scenes implicitly
-            // with attribute like [BindScene(k_InGameUISceneName)]
             App.Services.Get<ISceneService>()
                .Load<IDinoInGameUI>(
                                     k_InGameUISceneName,

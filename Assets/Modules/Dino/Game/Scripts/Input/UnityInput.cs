@@ -21,7 +21,12 @@ namespace StansAssets.ProjectSample.Controls
 
         void Update()
         {
-            foreach (var input in m_Inputs.Where(i => i.HasChanged())) { (input.Value ? OnPressed : OnReleased)?.Invoke(input.Name); }
+            foreach (var input in m_Inputs) {
+                var changedValue = input.GetChangedValue();
+                if (changedValue != null) {
+                    (changedValue.Value ? OnPressed : OnReleased)?.Invoke(input.Name);
+                }
+            }
         }
 #endif
     }
