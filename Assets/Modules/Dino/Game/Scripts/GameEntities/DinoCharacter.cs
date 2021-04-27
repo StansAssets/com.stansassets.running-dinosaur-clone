@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 using StansAssets.ProjectSample.Controls;
+using StansAssets.ProjectSample.InApps;
 
 namespace StansAssets.ProjectSample.Dino.Game
 {
@@ -14,6 +15,7 @@ namespace StansAssets.ProjectSample.Dino.Game
         [SerializeField] Vector2 m_InitialJumpImpulse;
         [SerializeField] float m_JumpButtonHeldForce;
         [SerializeField] ConstantForce2D m_Force2D;
+        [SerializeField] GameObject m_PremiumVisuals;
 
         // initial position of Dino is used as a respawn position
         Vector2 m_SpawnPosition;
@@ -50,6 +52,9 @@ namespace StansAssets.ProjectSample.Dino.Game
                                          State = DinoState.Grounded;
                                  }
                              });
+            
+            if (m_PremiumVisuals)
+                m_PremiumVisuals.SetActive(RewardManager.HasPremium);
         }
 
 

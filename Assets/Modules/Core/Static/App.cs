@@ -1,5 +1,4 @@
 using System;
-using SA.CrossPlatform.InApp;
 using StansAssets.Foundation;
 using StansAssets.Foundation.Patterns;
 using StansAssets.SceneManagement;

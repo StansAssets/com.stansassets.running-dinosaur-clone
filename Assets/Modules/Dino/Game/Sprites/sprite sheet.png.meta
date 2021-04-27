@@ -125,6 +125,9 @@ TextureImporter:
   - first:
       213: 21300080
     second: number__9
+  - first:
+      213: -5207231776682384544
+    second: crown
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -817,6 +820,27 @@ TextureImporter:
       bones: []
       spriteID: 85305410000000000800000000000000
       internalID: 21300056
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: crown
+      rect:
+        serializedVersion: 2
+        x: 1305
+        y: 109
+        width: 33
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 06368b7c9423cb7b0800000000000000
+      internalID: -5207231776682384544
       vertices: []
       indices: 
       edges: []

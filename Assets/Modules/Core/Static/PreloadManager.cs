@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using StansAssets.SceneManagement;
 
 namespace StansAssets.ProjectSample.Core
