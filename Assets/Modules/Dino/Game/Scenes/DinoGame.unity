@@ -1112,7 +1112,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1714abdc381134cfa988560330ad7490, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dayTimeLength: 100
+  dayTimeLength: 600
   nightTimeLength: 200
 --- !u!1001 &650053576
 PrefabInstance:
