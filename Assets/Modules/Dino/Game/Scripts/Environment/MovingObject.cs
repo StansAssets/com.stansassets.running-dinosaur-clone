@@ -13,7 +13,7 @@ namespace StansAssets.ProjectSample.Dino.Game
         [SerializeField] GameObject m_PremiumVisuals;
 
         float m_MovementPerScorePoint;
-        bool m_Active;
+        bool m_Active = true;
         protected Image m_Image;
 
         bool Active {
@@ -46,11 +46,14 @@ namespace StansAssets.ProjectSample.Dino.Game
             
             if (m_PremiumVisuals)
                 m_PremiumVisuals.SetActive(RewardManager.HasPremium);
+            
+            HandleDayTimeChange(true);
         }
 
         protected virtual void HandleDayTimeChange (bool isDay)
         {
             Active = isDay ? !m_DisabledAtDay : !m_DisabledAtNight;
+            Debug.Log($"daytime changed {isDay}; {gameObject.name} active > {Active}");
         }
 
         protected virtual void Reset ()
