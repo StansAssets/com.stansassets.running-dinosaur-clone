@@ -16,18 +16,7 @@ namespace StansAssets.ProjectSample.Dino.Game
         {
             m_TimeOfDayRemaining -= score;
             if (m_TimeOfDayRemaining <= 0) {
-                IsDay = false;
-            }
-        }
-
-        bool IsDay
-        {
-            get => m_Day;
-            set
-            {
-                if (m_Day == value) return;
-                
-                m_Day = value;
+                m_Day = !m_Day;
                 m_TimeOfDayLength = m_Day ? dayTimeLength : nightTimeLength;
                 m_TimeOfDayRemaining += m_TimeOfDayLength;
                 OnDayTimeChange?.Invoke (m_Day);
@@ -36,16 +25,10 @@ namespace StansAssets.ProjectSample.Dino.Game
 
         public void Reset()
         {
-            m_TimeOfDayRemaining = 0;
-            IsDay = true;
-        }
-
-        void BeginTimeOfDay (bool isDay)
-        {
-            IsDay = isDay;
-            m_TimeOfDayLength = isDay ? dayTimeLength : nightTimeLength;
-            m_TimeOfDayRemaining += m_TimeOfDayLength;
-            OnDayTimeChange?.Invoke (IsDay);
+            m_TimeOfDayRemaining = dayTimeLength;
+            m_TimeOfDayRemaining = dayTimeLength;
+            m_Day = true;
+            OnDayTimeChange?.Invoke (m_Day);
         }
     }
 }
