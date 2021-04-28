@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace StansAssets.ProjectSample.Controls
 {
@@ -13,7 +14,9 @@ namespace StansAssets.ProjectSample.Controls
 #if UNITY_EDITOR || UNITY_STANDALONE
         void Start()
         {
-            gameObject.SetActive(false);
+            foreach (var btn in GetComponentsInChildren<Button>()) {
+                btn.interactable = false;
+            }
         }
 #endif
 
