@@ -26,4 +26,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Modules/Dino/EndGameUI/DinoGameOverUI.unity
     guid: 76afb2de802b9b84991ddf83f9163d6c
-  m_configObjects: {}
+  m_configObjects:
+    com.unity.addressableassets: {fileID: 11400000, guid: 1e86e187ef8cd6a49898e0a0db5b0999,
+      type: 2}

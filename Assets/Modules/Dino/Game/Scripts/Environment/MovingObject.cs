@@ -13,19 +13,10 @@ namespace StansAssets.ProjectSample.Dino.Game
         [SerializeField] GameObject m_PremiumVisuals;
 
         float m_MovementPerScorePoint;
-        bool m_Active = true;
         protected Image m_Image;
         Vector3 m_InitialPosition;
 
-        bool Active {
-            get => m_Active;
-            set {
-                if (m_Active != value) {
-                    m_Active = value;
-                    m_Visuals.SetActive (value);
-                }
-            }
-        }
+        bool Active { get; set; } = true;
 
         protected float CycleProgress => (m_Bounds.xMax - m_Visuals.transform.position.x) / m_Bounds.width;
 
