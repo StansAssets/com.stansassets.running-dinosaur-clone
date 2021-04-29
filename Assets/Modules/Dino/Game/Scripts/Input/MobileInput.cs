@@ -1,4 +1,5 @@
 using System;
+using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -20,7 +21,7 @@ namespace StansAssets.ProjectSample.Controls
         }
 #endif
 
-        public void Press() => OnPressed?.Invoke(m_InputName);
-        public void Release() => OnReleased?.Invoke(m_InputName);
+        [UsedImplicitly] public void Press() => OnPressed?.Invoke(m_InputName);
+        [UsedImplicitly] public void Release() => OnReleased?.Invoke(m_InputName);
     }
 }

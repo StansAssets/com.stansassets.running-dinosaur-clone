@@ -17,9 +17,7 @@ namespace StansAssets.ProjectSample.Dino.Game
         [SerializeField] ConstantForce2D m_Force2D;
         [SerializeField] GameObject m_PremiumVisuals;
 
-        // initial position of Dino is used as a respawn position
         Vector2 m_SpawnPosition;
-        // increases a height of jump if user holds the Jump button
         DinoState m_State;
         
         void Start ()

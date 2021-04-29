@@ -29,20 +29,5 @@ namespace StansAssets.ProjectSample.Dino.Game
                 Phase = Phase++ % m_MoonSprites.Length;
             }
         }
-
-        protected override void AddScore (float score)
-        {
-            base.AddScore (score);
-            if (CycleProgress > 0) {
-                m_Image.color = new Color (
-                                           0.75f,
-                                           0.75f,
-                                           0.75f,
-                                           GetMoonTransparency (CycleProgress));
-            }
-        }
-
-        // a = 1 in the middle of a night time, a = 0 at the beginning and at the end of the night time
-        float GetMoonTransparency (float nightTimePassed) => 1f - Mathf.Pow ((nightTimePassed - 0.5f) * 2, 2);
     }
 }

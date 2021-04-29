@@ -10,11 +10,9 @@ namespace StansAssets.ProjectSample.Dino.Game
         public event Action<float> OnScoreGained;
         public event Action OnReset;
 
-        // Component that controls and updates game visual appearance
         [SerializeField] float m_InitialSpeed, m_MaxSpeed, m_AccelerationPerFrame, m_ScoreFromSpeed;
         [SerializeField] RectTransform[] m_GroundBlocks;
         [SerializeField] float m_GroundRespawnPositionX;
-        // The game is expected to run at 60 FPS
         [SerializeField] int m_SpawnNothingForFirstFrames = 30;
         [SerializeField] Tutorial m_Tutorial;
 
