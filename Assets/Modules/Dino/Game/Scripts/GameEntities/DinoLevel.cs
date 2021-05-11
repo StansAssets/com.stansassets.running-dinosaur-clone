@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace StansAssets.ProjectSample.Dino.Game
 {
-    public class DinoLevel : MonoBehaviour
+    public class DinoLevel : ScreenSizeDependent
     {
         public event Action<float> OnScoreGained;
         public event Action OnReset;
@@ -105,5 +105,13 @@ namespace StansAssets.ProjectSample.Dino.Game
             m_FramesBeforeSpawn = GetFramesGap (selectedSpawner.RequiredSpace);
             return selectedSpawner.GetObject ();
         }
-    }
+
+		public override void UpdateScreenSize(Vector2 fromSize, Vector2 toSize)
+		{
+			var deltaX = (toSize.x - fromSize.x) / 2;
+			foreach (var ground in m_GroundBlocks)
+				ground.transform.Translate(deltaX * Vector2.left);
+			m_GroundRespawnPositionX -= deltaX;
+		}
+	}
 }

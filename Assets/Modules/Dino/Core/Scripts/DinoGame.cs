@@ -4,12 +4,11 @@ using StansAssets.Foundation.Extensions;
 using StansAssets.ProjectSample.Dino.Game;
 using UnityEngine.SceneManagement;
 using StansAssets.ProjectSample.Core;
-using UnityEngine;
 using SA.CrossPlatform.Analytics;
 
 namespace StansAssets.ProjectSample.Dino
 {
-    public class DinoGame
+	public class DinoGame
     {
         const string k_InGameUISceneName = "DinoInGameUI";
         
@@ -17,7 +16,6 @@ namespace StansAssets.ProjectSample.Dino
         
         readonly DinoLevel m_DinoLevel;
         readonly DinoCharacter m_DinoCharacter;
-        int m_CurrentScreenWidth = 1920;
 
         public DinoGame(Scene targetScene)
         {
@@ -67,18 +65,7 @@ namespace StansAssets.ProjectSample.Dino
 
         internal void Start()
         {
-            UpdateResolution();
             OnStart?.Invoke();
-        }
-
-        void UpdateResolution()
-        {
-            var screenWidthDelta = Screen.width - m_CurrentScreenWidth;
-            if (screenWidthDelta != 0) {
-                foreach (var spawner in GameObject.FindObjectsOfType<ScreenSizeDependent>()) {
-                    spawner.UpdateScreenWidth(screenWidthDelta);
-                }
-            }
         }
     }
 }

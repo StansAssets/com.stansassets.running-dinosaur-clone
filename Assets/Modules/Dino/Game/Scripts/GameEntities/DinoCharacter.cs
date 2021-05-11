@@ -5,7 +5,7 @@ using StansAssets.ProjectSample.InApps;
 
 namespace StansAssets.ProjectSample.Dino.Game
 {
-    public class DinoCharacter : ScreenSizeDependent
+    public class DinoCharacter : MonoBehaviour
     {
         public event Action OnHit;
 
@@ -112,11 +112,6 @@ namespace StansAssets.ProjectSample.Dino.Game
                 case DinoState.Ducking: return "dino-ducking";
                 default: throw new ArgumentOutOfRangeException ();
             }
-        }
-
-        public override void UpdateScreenWidth(int screenWidthDelta)
-        {
-            m_SpawnPosition.x -= screenWidthDelta;
         }
     }
 }

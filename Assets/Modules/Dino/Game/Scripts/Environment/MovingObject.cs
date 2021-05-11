@@ -61,9 +61,9 @@ namespace StansAssets.ProjectSample.Dino.Game
             m_Visuals.transform.Translate (translation);
         }
 
-        public override void UpdateScreenWidth(int screenWidthDelta)
+        public override void UpdateScreenSize(Vector2 fromSize, Vector2 toSize)
         {
-            m_Bounds.width += screenWidthDelta;
+            m_Bounds.width += toSize.x - fromSize.x;
         }
     }
 }

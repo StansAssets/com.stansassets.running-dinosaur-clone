@@ -60,8 +60,11 @@ namespace StansAssets.ProjectSample.Dino.Game
             return result;
         }
 
-        
-        // current implementation requires no resizing
-        public override void UpdateScreenWidth(int screenWidthDelta) { }
-    }
+		public override void UpdateScreenSize(Vector2 fromSize, Vector2 toSize)
+		{
+			var delta = toSize - fromSize;
+			transform.Translate(delta / 2);
+			m_MinPositionX -= (int)(delta.x / 2);
+		}
+	}
 }
