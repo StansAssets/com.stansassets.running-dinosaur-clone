@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using StansAssets.Foundation.Extensions;
-using StansAssets.ProjectSample.Dino.Game;
 using UnityEngine.SceneManagement;
 using StansAssets.ProjectSample.Core;
 using SA.CrossPlatform.Analytics;
 
-namespace StansAssets.ProjectSample.Dino
+namespace StansAssets.Dino.Game
 {
 	public class DinoGame
     {
@@ -16,12 +15,16 @@ namespace StansAssets.ProjectSample.Dino
         
         readonly DinoLevel m_DinoLevel;
         readonly DinoCharacter m_DinoCharacter;
+        
+        internal bool IsGameOver { get; private set; }
 
         public DinoGame(Scene targetScene)
         {
             m_DinoCharacter = targetScene.GetComponentInChildren<DinoCharacter>();
             m_DinoCharacter.OnHit += () => OnGameOver?.Invoke();
-            OnGameOver += () => {
+            OnGameOver += () =>
+            {
+                IsGameOver = true;
                 m_DinoCharacter.State = DinoState.Dead;
                 var details = new Dictionary<string, object>();
                 details.Add("Score", m_DinoLevel.Score);
@@ -52,10 +55,14 @@ namespace StansAssets.ProjectSample.Dino
             OnStart?.Invoke();
         }
 
-        internal void Pause(bool isPaused)
+        internal void Pause()
         {
-            m_DinoLevel.SetLevelActive(!isPaused);
-            m_DinoCharacter.SetFrozen(isPaused);
+            SetGameState(false);
+        }
+
+        internal void Resume()
+        {
+            SetGameState(true);
         }
 
         internal void Destroy()
@@ -66,6 +73,12 @@ namespace StansAssets.ProjectSample.Dino
         internal void Start()
         {
             OnStart?.Invoke();
+        }
+
+        void SetGameState(bool state)
+        {
+            m_DinoLevel.SetLevelActive(state);
+            m_DinoCharacter.SetFrozen(!state);
         }
     }
 }

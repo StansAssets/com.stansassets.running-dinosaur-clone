@@ -1,11 +1,12 @@
 {
-    "name": "StansAssets.SampleProject.Dino.Editor",
+    "name": "StansAssets.Dino.InApps",
+    "rootNamespace": "",
     "references": [
-        "GUID:c0d1d1ce6d1a4c6bb2750d55a23e8f2e"
+        "GUID:5b31e461925be0e4096613f091efd54e",
+        "GUID:68dcdd92efcfdc84898218413eb49bec",
+        "GUID:f3af174804a485643a32e061a90ef9f7"
     ],
-    "includePlatforms": [
-        "Editor"
-    ],
+    "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,

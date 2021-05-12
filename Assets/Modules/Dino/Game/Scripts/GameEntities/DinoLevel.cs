@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace StansAssets.ProjectSample.Dino.Game
+namespace StansAssets.Dino.Game
 {
     public class DinoLevel : ScreenSizeDependent
     {
@@ -24,7 +24,7 @@ namespace StansAssets.ProjectSample.Dino.Game
         // New spawned obstacles will be attached to this ground block as children.
         RectTransform m_AttachTarget;
 
-        IReadOnlyList<ObjectSpawner> Spawners => m_Spawners ?? (m_Spawners = FindObjectsOfType<ObjectSpawner> ());
+        IReadOnlyList<ObjectSpawner> Spawners => m_Spawners ??= FindObjectsOfType<ObjectSpawner> ();
         public int Score => Mathf.RoundToInt(m_Score);
         
         int GetFramesGap (float minGapWidth)

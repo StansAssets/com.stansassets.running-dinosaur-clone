@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine;
 
-namespace StansAssets.ProjectSample.Dino.Game
+namespace StansAssets.Dino.Game
 {
     class TimeOfDay : MonoBehaviour
     {

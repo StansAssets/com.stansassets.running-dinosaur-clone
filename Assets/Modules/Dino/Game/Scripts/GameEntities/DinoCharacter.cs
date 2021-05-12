@@ -3,7 +3,7 @@ using UnityEngine;
 using StansAssets.ProjectSample.Controls;
 using StansAssets.ProjectSample.InApps;
 
-namespace StansAssets.ProjectSample.Dino.Game
+namespace StansAssets.Dino.Game
 {
     public class DinoCharacter : MonoBehaviour
     {

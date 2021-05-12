@@ -1,2 +1,2 @@
 ﻿using System.Runtime.CompilerServices;
-[assembly: InternalsVisibleTo("StansAssets.ProjectSample.Landing")]
+[assembly: InternalsVisibleTo("StansAssets.Dino.Landing")]

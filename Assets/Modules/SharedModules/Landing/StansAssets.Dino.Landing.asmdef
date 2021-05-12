@@ -1,11 +1,10 @@
 {
-    "name": "StansAssets.ProjectSample.Core",
+    "name": "StansAssets.Dino.Landing",
     "rootNamespace": "",
     "references": [
-        "GUID:8c26edb72a5b44ef39c0bd009ec1322d",
-        "GUID:db0eb1f6c1244402aa4d287a997cdb47",
-        "GUID:3f4625e0250e59e479f19aa18f45287c",
-        "GUID:68dcdd92efcfdc84898218413eb49bec"
+        "StansAssets.SceneManagement",
+        "StansAssets.Foundation",
+        "StansAssets.ProjectSample.Core"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

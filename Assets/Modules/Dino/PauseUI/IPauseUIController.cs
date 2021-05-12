@@ -1,10 +1,11 @@
 using StansAssets.SceneManagement;
 using UnityEngine.Events;
 
-namespace StansAssets.ProjectSample.Boxes.EndGameUI
+namespace StansAssets.Dino.PauseUI
 {
-    public interface IDinoEndGameUI : ISceneManager
+    public interface IPauseUIController : ISceneManager
     {
+        event UnityAction OnBack;
         event UnityAction OnMainMenu;
         event UnityAction OnRestart;
     }

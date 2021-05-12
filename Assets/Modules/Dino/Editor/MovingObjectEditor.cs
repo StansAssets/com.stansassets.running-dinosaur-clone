@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEditor;
 
-namespace StansAssets.ProjectSample.Dino.Game
+namespace StansAssets.Dino.Game
 {
     [CustomEditor (typeof(MovingObject))]
     public class MovingObjectInspector : Editor

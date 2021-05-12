@@ -2,7 +2,7 @@ using StansAssets.ProjectSample.InApps;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace StansAssets.ProjectSample.Dino.Game
+namespace StansAssets.Dino.Game
 {
     public class MovingObject : ScreenSizeDependent
     {

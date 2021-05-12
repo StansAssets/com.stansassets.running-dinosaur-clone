@@ -1,7 +1,6 @@
-﻿using StansAssets.ProjectSample.Dino.Game;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace StansAssets.ProjectSample.Dino
+namespace StansAssets.Dino.Game
 {
 	[ExecuteAlways]
 	public class ScreenSizeControl : MonoBehaviour

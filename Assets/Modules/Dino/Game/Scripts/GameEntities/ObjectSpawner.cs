@@ -3,7 +3,7 @@ using System.Linq;
 using StansAssets.Foundation.Patterns;
 using UnityEngine;
 
-namespace StansAssets.ProjectSample.Dino.Game
+namespace StansAssets.Dino.Game
 {
     public class ObjectSpawner : ScreenSizeDependent
     {

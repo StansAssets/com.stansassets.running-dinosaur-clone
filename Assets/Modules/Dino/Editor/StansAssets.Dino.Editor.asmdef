@@ -1,0 +1,18 @@
+{
+    "name": "StansAssets.Dino.Editor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:c0d1d1ce6d1a4c6bb2750d55a23e8f2e"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
