@@ -1,13 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
 using StansAssets.Foundation.Extensions;
 using StansAssets.ProjectSample.Dino.Game;
 using UnityEngine.SceneManagement;
 using StansAssets.ProjectSample.Core;
-using UnityEngine;
+using SA.CrossPlatform.Analytics;
 
 namespace StansAssets.ProjectSample.Dino
 {
-    public class DinoGame
+	public class DinoGame
     {
         const string k_InGameUISceneName = "DinoInGameUI";
         
@@ -15,17 +16,19 @@ namespace StansAssets.ProjectSample.Dino
         
         readonly DinoLevel m_DinoLevel;
         readonly DinoCharacter m_DinoCharacter;
-        int m_CurrentScreenWidth = 1920;
 
         public DinoGame(Scene targetScene)
         {
             m_DinoCharacter = targetScene.GetComponentInChildren<DinoCharacter>();
             m_DinoCharacter.OnHit += () => OnGameOver?.Invoke();
-            OnGameOver += () => m_DinoCharacter.State = DinoState.Dead;
+            OnGameOver += () => {
+                m_DinoCharacter.State = DinoState.Dead;
+                var details = new Dictionary<string, object>();
+                details.Add("Score", m_DinoLevel.Score);
+                UM_AnalyticsService.Client.Event("GameOver", details);
+            };
             
             m_DinoLevel = targetScene.GetComponentInChildren<DinoLevel>();
-            // in would be nice to load/unload related scenes implicitly
-            // with attribute like [BindScene(k_InGameUISceneName)]
             App.Services.Get<ISceneService>()
                .Load<IDinoInGameUI>(
                                     k_InGameUISceneName,
@@ -62,18 +65,7 @@ namespace StansAssets.ProjectSample.Dino
 
         internal void Start()
         {
-            UpdateResolution();
             OnStart?.Invoke();
-        }
-
-        void UpdateResolution()
-        {
-            var screenWidthDelta = Screen.width - m_CurrentScreenWidth;
-            if (screenWidthDelta != 0) {
-                foreach (var spawner in GameObject.FindObjectsOfType<ScreenSizeDependent>()) {
-                    spawner.UpdateScreenWidth(screenWidthDelta);
-                }
-            }
         }
     }
 }

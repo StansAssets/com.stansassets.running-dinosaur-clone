@@ -1,0 +1,17 @@
+{
+    "name": "SA.iOS",
+    "references": [
+        "SA.Foundation",
+        "SA.iOS.XCode",
+        "StansAssets.Foundation"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -15,9 +15,6 @@ EditorBuildSettings:
     path: Assets/Modules/SharedModules/MainMenu/MainMenu.unity
     guid: 67b1869e0523a4238ab93a68a573b630
   - enabled: 1
-    path: Assets/Modules/Dino/EndGameUI/DinoEndGameUI.unity
-    guid: 76afb2de802b9b84991ddf83f9163d6c
-  - enabled: 1
     path: Assets/Modules/Dino/PauseUI/DinoPauseUI.unity
     guid: 8af7ca06f617e59408d6a7fbad032a88
   - enabled: 1
@@ -26,4 +23,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Modules/Dino/GameUI/Scenes/DinoInGameUI.unity
     guid: ba1ee072034969d4bad79c38d8ceac5f
-  m_configObjects: {}
+  - enabled: 1
+    path: Assets/Modules/Dino/EndGameUI/DinoGameOverUI.unity
+    guid: 76afb2de802b9b84991ddf83f9163d6c
+  m_configObjects:
+    com.unity.addressableassets: {fileID: 11400000, guid: 1e86e187ef8cd6a49898e0a0db5b0999,
+      type: 2}

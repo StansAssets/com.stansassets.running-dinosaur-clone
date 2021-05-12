@@ -1,0 +1,16 @@
+General Information
+
+Bundle ID - com.iosnative
+SKU - com.stansassets.iosnative
+Apple ID - 373755811
+
+Team ID - P42C7H5LKK
+
+
+Android Native Pro
+SKU - com.stansassets.androidnative.pro
+PWD - 89Regila
+
+
+cd C:\Users\User\AppData\Local\Android\Sdk\build-tools\27.0.3
+aapt d permissions D:\StansAssets\StansAssets\android_native_pro.apk

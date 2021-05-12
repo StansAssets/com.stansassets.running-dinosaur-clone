@@ -1,51 +1,74 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
 
 namespace StansAssets.ProjectSample.Dino.Game
 {
-    public class TimeOfDay : MonoBehaviour
+    class TimeOfDay : MonoBehaviour
     {
-        public event Action<bool> OnDayTimeChange;
+        private const string k_ShaderBlendPropertyName = "_Blend";
         
+        public event Action<bool> OnDayTimeChange;
+
         [SerializeField] int dayTimeLength, nightTimeLength;
+        [SerializeField] Material m_Material;
+        [SerializeField] float m_BlendDuration;
 
-        bool m_IsDay;
-        float m_TimeOfDayLength, m_TimeOfDayRemaining;
+        float m_TimeOfDayRemaining;
+        bool m_Day;
+        float m_CurrentShaderBlend;
 
-        void ScoreGained (float score)
+        private float Blend
         {
-            m_TimeOfDayRemaining -= score;
-            if (m_TimeOfDayRemaining <= 0) {
-                BeginTimeOfDay (!m_IsDay);
+            get => m_CurrentShaderBlend;
+            set {
+                m_Material.SetFloat(k_ShaderBlendPropertyName, value);
+                m_CurrentShaderBlend = value;
             }
         }
 
-        void Start ()
+        public void ScoreGained(float score)
         {
-            var level = FindObjectOfType<DinoLevel> ();
-            level.OnScoreGained += ScoreGained;
-            level.OnReset += () => {
-                m_TimeOfDayRemaining = 0;
-                BeginTimeOfDay (true);
-            };
+            m_TimeOfDayRemaining -= score;
+            if (m_TimeOfDayRemaining <= 0)
+            {
+                m_Day = !m_Day;
+                m_TimeOfDayRemaining += m_Day ? dayTimeLength : nightTimeLength;
+                OnDayTimeChange?.Invoke(m_Day);
+                StartCoroutine(BlendCoroutine());
+            }
         }
 
-        void BeginTimeOfDay (bool isDay)
+        public void Reset()
         {
-            m_IsDay = isDay;
-            m_TimeOfDayLength = isDay ? dayTimeLength : nightTimeLength;
-            m_TimeOfDayRemaining += m_TimeOfDayLength;
-            OnDayTimeChange?.Invoke (m_IsDay);
+            m_TimeOfDayRemaining = dayTimeLength;
+            m_TimeOfDayRemaining = dayTimeLength;
+            m_Day = true;
+            OnDayTimeChange?.Invoke(m_Day);
+            StartCoroutine(BlendCoroutine());
         }
 
-        /*void SetColors ()
+        IEnumerator BlendCoroutine()
         {
-            m_ColorCurves.redChannel.MoveKey(0, new Keyframe(0, currentPhase));
-            m_ColorCurves.redChannel.MoveKey(1, new Keyframe(1, 1 - currentPhase));
-            m_ColorCurves.greenChannel.MoveKey(0, new Keyframe(0, currentPhase));
-            m_ColorCurves.greenChannel.MoveKey(1, new Keyframe(1, 1 - currentPhase));
-            m_ColorCurves.blueChannel.MoveKey(0, new Keyframe(0, currentPhase));
-            m_ColorCurves.blueChannel.MoveKey(1, new Keyframe(1, 1 - currentPhase));
-        }*/
+            float targetBlend = m_Day ? 0f : 1f;
+            if (Math.Abs(m_CurrentShaderBlend - targetBlend) < 0.01f) yield break;
+
+            float elapsedTime = 0f;
+            float blendingSpeed = (targetBlend - Blend) / m_BlendDuration;
+            while (elapsedTime < m_BlendDuration)
+            {
+                elapsedTime += Time.deltaTime;
+                Blend += blendingSpeed * Time.deltaTime;
+                yield return null;
+            }  
+            
+            Blend = targetBlend;
+            yield return null;
+        }
+
+        private void OnDestroy()
+        {
+            Blend = 0;
+        }
     }
 }

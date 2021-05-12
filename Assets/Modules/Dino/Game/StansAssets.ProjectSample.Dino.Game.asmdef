@@ -1,19 +1,21 @@
 {
-  "name": "StansAssets.ProjectSample.Dino.Game",
-  "references": [
-    "StansAssets.ProjectSample.Core",
-    "StansAssets.ProjectSample.UI",
-    "StansAssets.SceneManagement",
-    "StansAssets.Foundation",
-    "StansAssets.ProjectSample.Dino.GameUI"
-  ],
-  "includePlatforms": [],
-  "excludePlatforms": [],
-  "allowUnsafeCode": false,
-  "overrideReferences": false,
-  "precompiledReferences": [],
-  "autoReferenced": false,
-  "defineConstraints": [],
-  "versionDefines": [],
-  "noEngineReferences": false
+    "name": "StansAssets.ProjectSample.Dino.Game",
+    "references": [
+        "StansAssets.ProjectSample.Core",
+        "StansAssets.ProjectSample.UI",
+        "StansAssets.SceneManagement",
+        "StansAssets.Foundation",
+        "StansAssets.ProjectSample.Dino.GameUI",
+        "StansAssets.ProjectSample.Dino.EndGameUI",
+        "StansAssets.SampleProject.InApps"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
 }

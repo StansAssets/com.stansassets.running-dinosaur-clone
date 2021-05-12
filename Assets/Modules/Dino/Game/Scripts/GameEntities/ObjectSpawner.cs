@@ -15,7 +15,7 @@ namespace StansAssets.ProjectSample.Dino.Game
         PrefabPool m_Pool;
         readonly List<GameObject> m_ActiveObjects = new List<GameObject>();
 
-        protected Vector3 GetSpawnPosition() => transform.position;
+        Vector3 GetSpawnPosition() => transform.position;
         // min speed required to spawn this type of obstacles
         internal float RequiredSpeed => m_RequiredSpeed;
         // min space after the obstacle (in score points)
@@ -48,7 +48,7 @@ namespace StansAssets.ProjectSample.Dino.Game
                 m_Pool.Release(obj);
 
             m_ActiveObjects.Clear();
-            m_Pool.Clear();
+            m_Pool?.Clear();
         }
 
         public GameObject GetObject()
@@ -60,9 +60,11 @@ namespace StansAssets.ProjectSample.Dino.Game
             return result;
         }
 
-        public override void UpdateScreenWidth(int screenWidthDelta)
-        {
-            // current implementation requires no resizing
-        }
-    }
+		public override void UpdateScreenSize(Vector2 fromSize, Vector2 toSize)
+		{
+			var delta = toSize - fromSize;
+			transform.Translate(delta / 2);
+			m_MinPositionX -= (int)(delta.x / 2);
+		}
+	}
 }

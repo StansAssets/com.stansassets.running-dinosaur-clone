@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using StansAssets.ProjectSample.Ads;
+using StansAssets.ProjectSample.Core;
+using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
@@ -18,5 +20,17 @@ namespace StansAssets.ProjectSample.Boxes.EndGameUI
         
         [SerializeField] Button m_RestartButton;
         [SerializeField] Button m_MainMenu;
+
+
+        void Start()
+        {
+            App.Services.Get<AdsManager>().ShowRewardedAds(HandleRewardedAdsResult);
+        }
+
+        void HandleRewardedAdsResult(bool result)
+        {
+            m_RestartButton.enabled = true;
+            m_MainMenu.enabled = true;
+        }
     }
 }

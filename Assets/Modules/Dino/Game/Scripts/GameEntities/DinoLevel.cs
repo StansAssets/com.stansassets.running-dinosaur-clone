@@ -5,20 +5,19 @@ using UnityEngine;
 
 namespace StansAssets.ProjectSample.Dino.Game
 {
-    public class DinoLevel : MonoBehaviour
+    public class DinoLevel : ScreenSizeDependent
     {
         public event Action<float> OnScoreGained;
         public event Action OnReset;
 
-        // Component that controls and updates game visual appearance
         [SerializeField] float m_InitialSpeed, m_MaxSpeed, m_AccelerationPerFrame, m_ScoreFromSpeed;
         [SerializeField] RectTransform[] m_GroundBlocks;
         [SerializeField] float m_GroundRespawnPositionX;
-        // The game is expected to run at 60 FPS
         [SerializeField] int m_SpawnNothingForFirstFrames = 30;
+        [SerializeField] Tutorial m_Tutorial;
 
-        bool m_Running;
-        float m_Speed;
+        bool m_Running, m_Initialized;
+        float m_Speed, m_Score;
         int m_FramesBeforeSpawn;
         ObjectSpawner[] m_Spawners;
         float m_FullGroundWidth;
@@ -26,6 +25,7 @@ namespace StansAssets.ProjectSample.Dino.Game
         RectTransform m_AttachTarget;
 
         IReadOnlyList<ObjectSpawner> Spawners => m_Spawners ?? (m_Spawners = FindObjectsOfType<ObjectSpawner> ());
+        public int Score => Mathf.RoundToInt(m_Score);
         
         int GetFramesGap (float minGapWidth)
         {
@@ -37,20 +37,35 @@ namespace StansAssets.ProjectSample.Dino.Game
         // Gap width coefficient. Reduces density of obstacles.
         float GapCoefficient => Mathf.Sqrt(m_MaxSpeed / m_Speed);
         
-        void Start ()
+        void Init()
         {
             m_AttachTarget = m_GroundBlocks[1];
             m_FullGroundWidth = m_GroundBlocks.Sum (block => block.rect.width);
+            OnScoreGained += (value) => m_Score += value;
+
+            var timeOfDay = GetComponentInChildren<TimeOfDay>();
+            OnReset += timeOfDay.Reset;
+            OnScoreGained += timeOfDay.ScoreGained;
+            m_Initialized = true;
         }
 
         // Set default values
         public void Reset ()
         {
+            if (!m_Initialized) 
+                Init();
+            
+            m_Score = 0;
             m_Speed = m_InitialSpeed;
             m_FramesBeforeSpawn = m_SpawnNothingForFirstFrames;
             foreach (var spawner in Spawners) {
                 spawner.Reset ();
             }
+#if UNITY_EDITOR || UNITY_STANDALONE
+            m_Tutorial.Hide();
+#else 
+            m_Tutorial.Show();
+#endif
             OnReset?.Invoke ();
         }
 
@@ -90,5 +105,13 @@ namespace StansAssets.ProjectSample.Dino.Game
             m_FramesBeforeSpawn = GetFramesGap (selectedSpawner.RequiredSpace);
             return selectedSpawner.GetObject ();
         }
-    }
+
+		public override void UpdateScreenSize(Vector2 fromSize, Vector2 toSize)
+		{
+			var deltaX = (toSize.x - fromSize.x) / 2;
+			foreach (var ground in m_GroundBlocks)
+				ground.transform.Translate(deltaX * Vector2.left);
+			m_GroundRespawnPositionX -= deltaX;
+		}
+	}
 }

@@ -1,5 +1,6 @@
 using System;
 using JetBrains.Annotations;
+using StansAssets.ProjectSample.Ads;
 using StansAssets.SceneManagement;
 
 namespace StansAssets.ProjectSample.Core
@@ -21,9 +22,11 @@ namespace StansAssets.ProjectSample.Core
 
         public override void ChangeState(StackChangeEvent<AppState> evt, IProgressReporter progressReporter)
         {
+            var adsLoader = App.Services.Get<AdsManager>();
             switch (evt.Action)
             {
                 case StackAction.Added:
+                    adsLoader.ShowBanner(() => { });
                     if (m_MainMenuController != null)
                     {
                         m_MainMenuController.Active();
@@ -44,6 +47,7 @@ namespace StansAssets.ProjectSample.Core
 
                     break;
                 case StackAction.Removed:
+                    adsLoader.HideBanner();
                     m_MainMenuController.Deactivate();
                     progressReporter.SetDone();
                     break;

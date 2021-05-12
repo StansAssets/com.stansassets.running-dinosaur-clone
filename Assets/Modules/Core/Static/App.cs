@@ -2,6 +2,8 @@ using System;
 using StansAssets.Foundation;
 using StansAssets.Foundation.Patterns;
 using StansAssets.SceneManagement;
+using StansAssets.ProjectSample.Ads;
+using SA.CrossPlatform.Analytics;
 
 namespace StansAssets.ProjectSample.Core
 {
@@ -18,6 +20,9 @@ namespace StansAssets.ProjectSample.Core
             var sceneService = new DefaultSceneLoadService();
             s_Services.Register<ISceneService>(sceneService);
             s_Services.Register<IPoolingService>(new GameObjectsPool("GameObjects Pool"));
+            s_Services.Register<AdsManager>(new AdsManager());
+            
+            UM_AnalyticsService.Client.Init();
 
             sceneService.PreparePreloader(() =>
             {
