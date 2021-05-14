@@ -3,19 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace StansAssets.ProjectSample.Dino.Game
+namespace StansAssets.Dino.Game
 {
-    public class DinoLevel : ScreenSizeDependent
+    public class DinoLevel : MonoBehaviour
     {
         public event Action<float> OnScoreGained;
         public event Action OnReset;
 
-        [SerializeField] float m_InitialSpeed, m_MaxSpeed, m_AccelerationPerFrame, m_ScoreFromSpeed;
-        [SerializeField] RectTransform[] m_GroundBlocks;
-        [SerializeField] float m_GroundRespawnPositionX;
+        [SerializeField] float m_InitialSpeed, m_MaxSpeed = default, m_AccelerationPerFrame = default, m_ScoreFromSpeed = default;
+        [SerializeField] RectTransform[] m_GroundBlocks = default;
+        [SerializeField] RectTransform m_GroundRespawnPoint = default;
         [SerializeField] int m_SpawnNothingForFirstFrames = 30;
-        [SerializeField] Tutorial m_Tutorial;
+        [SerializeField] private Tutorial m_Tutorial = default;
 
+        int GroundRespawnPositionX => (int)m_GroundRespawnPoint.anchoredPosition.x;
+        
         bool m_Running, m_Initialized;
         float m_Speed, m_Score;
         int m_FramesBeforeSpawn;
@@ -24,7 +26,7 @@ namespace StansAssets.ProjectSample.Dino.Game
         // New spawned obstacles will be attached to this ground block as children.
         RectTransform m_AttachTarget;
 
-        IReadOnlyList<ObjectSpawner> Spawners => m_Spawners ?? (m_Spawners = FindObjectsOfType<ObjectSpawner> ());
+        IReadOnlyList<ObjectSpawner> Spawners => m_Spawners ??= FindObjectsOfType<ObjectSpawner> ();
         public int Score => Mathf.RoundToInt(m_Score);
         
         int GetFramesGap (float minGapWidth)
@@ -81,7 +83,7 @@ namespace StansAssets.ProjectSample.Dino.Game
             var distance = m_Speed * Time.fixedDeltaTime * Vector3.left;
             for (int i = 0; i < m_GroundBlocks.Length; i++) {
                 m_GroundBlocks[i].Translate (distance);
-                if (m_GroundBlocks[i].transform.position.x < m_GroundRespawnPositionX) 
+                if (m_GroundBlocks[i].anchoredPosition.x < GroundRespawnPositionX) 
                     RepositionGroundBlock (i);
             }
 
@@ -105,13 +107,5 @@ namespace StansAssets.ProjectSample.Dino.Game
             m_FramesBeforeSpawn = GetFramesGap (selectedSpawner.RequiredSpace);
             return selectedSpawner.GetObject ();
         }
-
-		public override void UpdateScreenSize(Vector2 fromSize, Vector2 toSize)
-		{
-			var deltaX = (toSize.x - fromSize.x) / 2;
-			foreach (var ground in m_GroundBlocks)
-				ground.transform.Translate(deltaX * Vector2.left);
-			m_GroundRespawnPositionX -= deltaX;
-		}
-	}
+    }
 }

@@ -1,11 +1,10 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-namespace StansAssets.ProjectSample.Boxes.PauseUI
+namespace StansAssets.Dino.PauseUI
 {
-    public class DinoPauseUIController : MonoBehaviour, IDinoPauseUI
+    public class PauseUIController : MonoBehaviour, IPauseUIController
     {
         public event UnityAction OnBack {
             add => m_BackButton.onClick.AddListener (value);

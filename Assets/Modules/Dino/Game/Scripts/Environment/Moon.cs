@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace StansAssets.ProjectSample.Dino.Game
+namespace StansAssets.Dino.Game
 {
     public class Moon : MovingObject
     {

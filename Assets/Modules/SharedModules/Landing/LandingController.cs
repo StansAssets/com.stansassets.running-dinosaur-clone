@@ -1,7 +1,7 @@
 ﻿using StansAssets.ProjectSample.Core;
 using UnityEngine;
 
-namespace StansAssets.ProjectSample.Landing
+namespace StansAssets.Dino.Landing
 {
     class LandingController : MonoBehaviour
     {

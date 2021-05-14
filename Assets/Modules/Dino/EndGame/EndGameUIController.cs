@@ -4,16 +4,16 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-namespace StansAssets.ProjectSample.Boxes.EndGameUI
+namespace StansAssets.Dino.EndGame
 {
-    public class DinoEndGameUIController : MonoBehaviour, IDinoEndGameUI
+    public class EndGameUIController : MonoBehaviour, IDinoEndGameUI
     {
         public event UnityAction OnMainMenu {
             add => m_MainMenu.onClick.AddListener (value);
             remove => m_MainMenu.onClick.RemoveListener (value);
         }
         
-        public event UnityAction OnRestart{
+        public event UnityAction OnRestart {
             add => m_RestartButton.onClick.AddListener (value);
             remove => m_RestartButton.onClick.RemoveListener (value);
         }

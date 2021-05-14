@@ -5,7 +5,7 @@ namespace StansAssets.ProjectSample.Core
 {
     public interface IMainMenuController : ISceneManager
     {
-        event UnityAction OnGameRequest;
+        event UnityAction OnPlayRequested;
 
         void Active();
         void Deactivate();

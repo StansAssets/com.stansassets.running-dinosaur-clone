@@ -6,7 +6,7 @@ namespace StansAssets.ProjectSample.Core
 {
     class MainMenuController : MonoBehaviour, IMainMenuController
     {
-        public event UnityAction OnGameRequest {
+        public event UnityAction OnPlayRequested {
             add => m_PlayButton.onClick.AddListener (value);
             remove => m_PlayButton.onClick.RemoveListener (value);
         }

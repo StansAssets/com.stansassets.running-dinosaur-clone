@@ -3,15 +3,17 @@ using System.Linq;
 using StansAssets.Foundation.Patterns;
 using UnityEngine;
 
-namespace StansAssets.ProjectSample.Dino.Game
+namespace StansAssets.Dino.Game
 {
-    public class ObjectSpawner : ScreenSizeDependent
+    public class ObjectSpawner : MonoBehaviour
     {
         [SerializeField] GameObject m_ExampleObject;
-        [SerializeField] int m_MinPositionX = -1000;
         [SerializeField] float m_RequiredSpeed;
         [SerializeField] float m_MinFramesGap = 50;
+        [SerializeField] RectTransform m_backToPoolPosition;
 
+        int ReleasePositionX => (int)m_backToPoolPosition.anchoredPosition.x;
+        
         PrefabPool m_Pool;
         readonly List<GameObject> m_ActiveObjects = new List<GameObject>();
 
@@ -29,17 +31,17 @@ namespace StansAssets.ProjectSample.Dino.Game
 
         void FixedUpdate()
         {
-            var toRemove = m_ActiveObjects.Where(OutOfValidRange).ToList();
+            var toRemove = m_ActiveObjects.Where(ShouldReleaseObject).ToList();
             foreach (var obj in toRemove) {
                 m_Pool.Release(obj);
                 m_ActiveObjects.Remove(obj);
             }
         }
 
-        bool OutOfValidRange(GameObject obj)
+        bool ShouldReleaseObject(GameObject obj)
         {
             float positionX = obj.transform.position.x;
-            return positionX < m_MinPositionX || positionX > 2500;
+            return positionX < ReleasePositionX;
         }
 
         public void Reset()
@@ -59,12 +61,5 @@ namespace StansAssets.ProjectSample.Dino.Game
             result.transform.SetPositionAndRotation(GetSpawnPosition(), Quaternion.identity);
             return result;
         }
-
-		public override void UpdateScreenSize(Vector2 fromSize, Vector2 toSize)
-		{
-			var delta = toSize - fromSize;
-			transform.Translate(delta / 2);
-			m_MinPositionX -= (int)(delta.x / 2);
-		}
-	}
+    }
 }

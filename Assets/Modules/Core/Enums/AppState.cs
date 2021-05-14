@@ -4,5 +4,6 @@ namespace StansAssets.ProjectSample.Core
     {
         MainMenu,
         Game,
+        EndGame
     }
 }

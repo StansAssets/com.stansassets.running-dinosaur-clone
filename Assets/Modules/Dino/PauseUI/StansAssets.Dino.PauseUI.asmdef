@@ -1,16 +1,18 @@
 {
-    "name": "StansAssets.SampleProject.InApps",
+    "name": "StansAssets.Dino.PauseUI",
+    "rootNamespace": "",
     "references": [
-        "GUID:5b31e461925be0e4096613f091efd54e",
-        "GUID:68dcdd92efcfdc84898218413eb49bec",
-        "GUID:f3af174804a485643a32e061a90ef9f7"
+        "StansAssets.ProjectSample.Core",
+        "StansAssets.ProjectSample.UI",
+        "StansAssets.SceneManagement",
+        "StansAssets.Foundation"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,
     "precompiledReferences": [],
-    "autoReferenced": true,
+    "autoReferenced": false,
     "defineConstraints": [],
     "versionDefines": [],
     "noEngineReferences": false

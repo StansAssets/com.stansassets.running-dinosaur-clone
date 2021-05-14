@@ -2,9 +2,9 @@ using StansAssets.ProjectSample.InApps;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace StansAssets.ProjectSample.Dino.Game
+namespace StansAssets.Dino.Game
 {
-    public class MovingObject : ScreenSizeDependent
+    public class MovingObject : MonoBehaviour
     {
         [SerializeField] GameObject m_Visuals;
         [SerializeField] int m_ScoreForFullCycle = 250;
@@ -59,11 +59,6 @@ namespace StansAssets.ProjectSample.Dino.Game
             if (position.x + translation.x < m_Bounds.xMin)
                 translation += new Vector3(m_Bounds.width, Random.Range (m_Bounds.yMin, m_Bounds.yMax) - transform.localPosition.y);
             m_Visuals.transform.Translate (translation);
-        }
-
-        public override void UpdateScreenSize(Vector2 fromSize, Vector2 toSize)
-        {
-            m_Bounds.width += toSize.x - fromSize.x;
         }
     }
 }
