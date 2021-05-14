@@ -13,7 +13,7 @@ namespace StansAssets.Dino.Game
         [SerializeField] RectTransform m_backToPoolPosition;
 
         int ReleasePositionX => (int)m_backToPoolPosition.anchoredPosition.x;
-        
+
         PrefabPool m_Pool;
         readonly List<GameObject> m_ActiveObjects = new List<GameObject>();
 
@@ -35,6 +35,8 @@ namespace StansAssets.Dino.Game
             foreach (var obj in toRemove) {
                 m_Pool.Release(obj);
                 m_ActiveObjects.Remove(obj);
+                // Move object back under Spawner
+                obj.transform.SetParent(transform);
             }
         }
 
@@ -47,7 +49,9 @@ namespace StansAssets.Dino.Game
         public void Reset()
         {
             foreach (var obj in m_ActiveObjects)
+            {
                 m_Pool.Release(obj);
+            }
 
             m_ActiveObjects.Clear();
             m_Pool?.Clear();
