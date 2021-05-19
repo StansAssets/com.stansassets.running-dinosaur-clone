@@ -1,3 +1,4 @@
 Hello! This is a new rebase world!
 I've changed this file even a bit more!
 Try it!
+I've changed this file from test branch, try to live with that :)
