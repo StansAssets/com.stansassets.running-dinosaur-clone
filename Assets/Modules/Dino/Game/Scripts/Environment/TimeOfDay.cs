@@ -7,12 +7,14 @@ namespace StansAssets.Dino.Game
     class TimeOfDay : MonoBehaviour
     {
         private const string k_ShaderBlendPropertyName = "_Blend";
-        
+
         public event Action<bool> OnDayTimeChange;
 
         [SerializeField] int dayTimeLength, nightTimeLength;
         [SerializeField] Material m_Material;
         [SerializeField] float m_BlendDuration;
+
+        private Coroutine m_changeDayModeCoroutine;
 
         float m_TimeOfDayRemaining;
         bool m_Day;
@@ -35,17 +37,26 @@ namespace StansAssets.Dino.Game
                 m_Day = !m_Day;
                 m_TimeOfDayRemaining += m_Day ? dayTimeLength : nightTimeLength;
                 OnDayTimeChange?.Invoke(m_Day);
-                StartCoroutine(BlendCoroutine());
+                StartBlendCoroutine();
             }
         }
 
         public void Reset()
         {
             m_TimeOfDayRemaining = dayTimeLength;
-            m_TimeOfDayRemaining = dayTimeLength;
             m_Day = true;
             OnDayTimeChange?.Invoke(m_Day);
-            StartCoroutine(BlendCoroutine());
+            StartBlendCoroutine();
+        }
+
+        void StartBlendCoroutine(bool stopPrevious = true)
+        {
+            if (stopPrevious && m_changeDayModeCoroutine != null)
+            {
+                StopCoroutine(m_changeDayModeCoroutine);
+                m_changeDayModeCoroutine = null;
+            }
+            m_changeDayModeCoroutine = StartCoroutine(BlendCoroutine());
         }
 
         IEnumerator BlendCoroutine()
@@ -60,8 +71,8 @@ namespace StansAssets.Dino.Game
                 elapsedTime += Time.deltaTime;
                 Blend += blendingSpeed * Time.deltaTime;
                 yield return null;
-            }  
-            
+            }
+
             Blend = targetBlend;
             yield return null;
         }

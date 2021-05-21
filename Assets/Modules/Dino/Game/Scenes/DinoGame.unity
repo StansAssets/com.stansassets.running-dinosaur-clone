@@ -1343,7 +1343,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1714abdc381134cfa988560330ad7490, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dayTimeLength: 600
+  dayTimeLength: 200
   nightTimeLength: 200
   m_Material: {fileID: 2100000, guid: 6218906c2137d6345af99f0dfd2c4ed3, type: 2}
   m_BlendDuration: 0.5
