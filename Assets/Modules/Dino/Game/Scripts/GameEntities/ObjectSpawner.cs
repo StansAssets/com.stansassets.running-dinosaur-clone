@@ -10,9 +10,9 @@ namespace StansAssets.Dino.Game
         [SerializeField] GameObject m_ExampleObject;
         [SerializeField] float m_RequiredSpeed;
         [SerializeField] float m_MinFramesGap = 50;
-        [SerializeField] RectTransform m_backToPoolPosition;
+        [SerializeField] Transform m_backToPoolPoint;
 
-        int ReleasePositionX => (int)m_backToPoolPosition.anchoredPosition.x;
+        int ReleasePositionX => (int)m_backToPoolPoint.position.x;
 
         PrefabPool m_Pool;
         readonly List<GameObject> m_ActiveObjects = new List<GameObject>();
@@ -29,13 +29,13 @@ namespace StansAssets.Dino.Game
             m_Pool = new PrefabPool(m_ExampleObject, 5);
         }
 
-        void FixedUpdate()
+        void Update()
         {
             var toRemove = m_ActiveObjects.Where(ShouldReleaseObject).ToList();
             foreach (var obj in toRemove) {
                 m_Pool.Release(obj);
                 m_ActiveObjects.Remove(obj);
-                // Move object back under Spawner
+                // Move object back to Spawner
                 obj.transform.SetParent(transform);
             }
         }
