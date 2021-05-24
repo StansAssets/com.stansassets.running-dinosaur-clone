@@ -4,6 +4,7 @@ using StansAssets.Foundation.Patterns;
 using StansAssets.SceneManagement;
 using StansAssets.ProjectSample.Ads;
 using SA.CrossPlatform.Analytics;
+using StansAssets.ProjectSample.Controls;
 
 namespace StansAssets.ProjectSample.Core
 {
@@ -20,8 +21,17 @@ namespace StansAssets.ProjectSample.Core
             var sceneService = new DefaultSceneLoadService();
             s_Services.Register<ISceneService>(sceneService);
             s_Services.Register<IPoolingService>(new GameObjectsPool("GameObjects Pool"));
-            s_Services.Register<AdsManager>(new AdsManager());
-            
+            s_Services.Register(new AdsManager());
+
+            IPlatformInput platformInput = null;
+            #if UNITY_EDITOR || UNITY_STANDALONE
+                        platformInput = new StandaloneInput();
+            #elif UNITY_ANDROID || UNITY_IOS
+                        platformInput = new MobileInput();
+            #endif
+
+            s_Services.Register<IInputManager>(new InputManager(platformInput));
+
             UM_AnalyticsService.Client.Init();
 
             sceneService.PreparePreloader(() =>

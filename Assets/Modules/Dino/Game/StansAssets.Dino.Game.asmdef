@@ -2,6 +2,7 @@
     "name": "StansAssets.Dino.Game",
     "rootNamespace": "",
     "references": [
+        "SA.CrossPlatform",
         "StansAssets.ProjectSample.Core",
         "StansAssets.ProjectSample.UI",
         "StansAssets.SceneManagement",
@@ -9,8 +10,7 @@
         "StansAssets.Dino.GameUI",
         "StansAssets.Dino.EndGame",
         "StansAssets.Dino.InApps",
-        "",
-        "SA.CrossPlatform"
+        "StansAssets.Dino.Input"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

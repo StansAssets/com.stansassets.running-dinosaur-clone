@@ -20,6 +20,37 @@ namespace StansAssets.Dino.Game
         Vector2 m_SpawnPosition;
         DinoState m_State;
         
+        public void SetInputManager(IInputManager inputManager)
+        {
+            inputManager.Subscribe(InputEventType.Jump,
+                             jumpPressed => {
+                                 if (jumpPressed)
+                                 {
+                                     if (State != DinoState.Jumping)
+                                         State = DinoState.Jumping;
+                                 }
+                                 else
+                                 {
+                                     m_Force2D.enabled = false;
+                                 }
+                             });
+
+            inputManager.Subscribe(InputEventType.Duck,
+                             duckingPressed => {
+                                 if (duckingPressed)
+                                 {
+                                     if (State == DinoState.Grounded)
+                                         State = DinoState.Ducking;
+                                 }
+                                 else
+                                 {
+                                     if (State == DinoState.Ducking)
+                                         State = DinoState.Grounded;
+                                 }
+                             });
+
+        }
+
         void Start ()
         {
             State = DinoState.Grounded;
@@ -27,29 +58,6 @@ namespace StansAssets.Dino.Game
 
             m_Force2D.force = Vector2.up * m_JumpButtonHeldForce;
             m_Force2D.enabled = false;
-
-            var inputs = FindObjectOfType<InputControl>();
-            inputs.Subscribe("Jump",
-                             jumpPressed => {
-                                 if (jumpPressed) {
-                                     if (State != DinoState.Jumping)
-                                         State = DinoState.Jumping;
-                                 }
-                                 else {
-                                     m_Force2D.enabled = false;
-                                 }
-                             });
-            inputs.Subscribe("Duck",
-                             duckingPressed => {
-                                 if (duckingPressed) {
-                                     if (State == DinoState.Grounded)
-                                         State = DinoState.Ducking;
-                                 }
-                                 else {
-                                     if (State == DinoState.Ducking)
-                                         State = DinoState.Grounded;
-                                 }
-                             });
             
             if (m_PremiumVisuals)
                 m_PremiumVisuals.SetActive(RewardManager.HasPremium);
