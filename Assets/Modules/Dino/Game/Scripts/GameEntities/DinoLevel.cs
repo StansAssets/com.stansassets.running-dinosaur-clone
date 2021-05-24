@@ -1,3 +1,5 @@
+using StansAssets.ProjectSample.Controls;
+using StansAssets.ProjectSample.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +21,7 @@ namespace StansAssets.Dino.Game
         [SerializeField] RectTransform m_GroundRespawnPoint = default;
         [SerializeField] int m_SpawnNothingForFirstFrames = 30;
         [SerializeField] private Tutorial m_Tutorial = default;
+        [SerializeField] DinoCharacter m_Character = default;
 
         int GroundRespawnPositionX => (int) m_GroundRespawnPoint.anchoredPosition.x;
 
@@ -47,6 +50,10 @@ namespace StansAssets.Dino.Game
             var timeOfDay = GetComponentInChildren<TimeOfDay>();
             OnReset += timeOfDay.Reset;
             OnScoreGained += timeOfDay.ScoreGained;
+
+            var inputManager = App.Services.Get<IInputManager>();
+            m_Character.SetInputManager(inputManager);
+
             m_Initialized = true;
         }
 

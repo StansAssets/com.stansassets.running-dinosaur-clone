@@ -4,14 +4,14 @@ namespace StansAssets.ProjectSample.Controls
 {
     class InputValue
     {
-        public readonly string Name;
+        public readonly InputEventType EventType;
         readonly Func<bool> m_GetInputValueFunc;
 
         bool m_CurrentValue;
 
-        public InputValue(string name, Func<bool> getValueFunc)
+        public InputValue(InputEventType eventType, Func<bool> getValueFunc)
         {
-            Name = name;
+            EventType = eventType;
             m_GetInputValueFunc = getValueFunc;
             m_CurrentValue = m_GetInputValueFunc();
         }

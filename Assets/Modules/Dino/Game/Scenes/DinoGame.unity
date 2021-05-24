@@ -2090,49 +2090,6 @@ PolygonCollider2D:
       - {x: -10.432301, y: 151.82346}
       - {x: -38.871258, y: 111.77119}
       - {x: -36.695835, y: 43.773613}
---- !u!1 &1009436052
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1009436053}
-  - component: {fileID: 1009436054}
-  m_Layer: 0
-  m_Name: UnityEditor / Standalone input
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1009436053
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1009436052}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1790515400}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1009436054
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1009436052}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aade64f7c17b428fa2aac4b4ece61098, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1148646420
 GameObject:
   m_ObjectHideFlags: 0
@@ -2297,7 +2254,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300044, guid: dc29fcfc7c6c443f99f3522080c85336, type: 3}
+  m_Sprite: {fileID: 21300044, guid: 186fe44092a87d94eba691b008308cdd, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2391,7 +2348,6 @@ GameObject:
   - component: {fileID: 1313431534}
   - component: {fileID: 1313431533}
   - component: {fileID: 1313431532}
-  - component: {fileID: 1313431531}
   m_Layer: 5
   m_Name: Duck Button
   m_TagString: Untagged
@@ -2419,19 +2375,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 1, y: 0.5}
---- !u!114 &1313431531
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1313431529}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1212ff0d346041ed815d7b036fdd7f17, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_InputName: Duck
 --- !u!114 &1313431532
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2449,10 +2392,11 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1313431531}
-          m_TargetAssemblyTypeName: 
-          m_MethodName: Press
-          m_Mode: 1
+        - m_Target: {fileID: 2012295334}
+          m_TargetAssemblyTypeName: StansAssets.ProjectSample.Controls.MobileInputUIManager,
+            StansAssets.Dino.Input
+          m_MethodName: OnDuckPressed
+          m_Mode: 0
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -2465,10 +2409,11 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1313431531}
-          m_TargetAssemblyTypeName: 
-          m_MethodName: Release
-          m_Mode: 1
+        - m_Target: {fileID: 2012295334}
+          m_TargetAssemblyTypeName: StansAssets.ProjectSample.Controls.MobileInputUIManager,
+            StansAssets.Dino.Input
+          m_MethodName: OnDuckReleased
+          m_Mode: 0
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -3480,7 +3425,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1790515400}
   - component: {fileID: 1790515401}
-  - component: {fileID: 1790515402}
   m_Layer: 0
   m_Name: Game
   m_TagString: Untagged
@@ -3500,7 +3444,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1768079060}
-  - {fileID: 1009436053}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3526,18 +3469,7 @@ MonoBehaviour:
   m_GroundRespawnPoint: {fileID: 282119951}
   m_SpawnNothingForFirstFrames: 50
   m_Tutorial: {fileID: 2012295333}
---- !u!114 &1790515402
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1790515399}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ec9f64b9f98043019b6a5da81452486d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Character: {fileID: 1330027484}
 --- !u!1 &1792332570
 GameObject:
   m_ObjectHideFlags: 0
@@ -3630,7 +3562,6 @@ GameObject:
   - component: {fileID: 1834999903}
   - component: {fileID: 1834999902}
   - component: {fileID: 1834999901}
-  - component: {fileID: 1834999900}
   m_Layer: 5
   m_Name: Jump Button
   m_TagString: Untagged
@@ -3658,19 +3589,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0.5}
---- !u!114 &1834999900
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1834999898}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1212ff0d346041ed815d7b036fdd7f17, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_InputName: Jump
 --- !u!114 &1834999901
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3688,10 +3606,11 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1834999900}
-          m_TargetAssemblyTypeName: 
-          m_MethodName: Press
-          m_Mode: 1
+        - m_Target: {fileID: 2012295334}
+          m_TargetAssemblyTypeName: StansAssets.ProjectSample.Controls.MobileInputUIManager,
+            StansAssets.Dino.Input
+          m_MethodName: OnJumpPressed
+          m_Mode: 0
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -3704,10 +3623,11 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1834999900}
-          m_TargetAssemblyTypeName: 
-          m_MethodName: Release
-          m_Mode: 1
+        - m_Target: {fileID: 2012295334}
+          m_TargetAssemblyTypeName: StansAssets.ProjectSample.Controls.MobileInputUIManager,
+            StansAssets.Dino.Input
+          m_MethodName: OnJumpReleased
+          m_Mode: 0
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -3808,6 +3728,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2012295332}
   - component: {fileID: 2012295333}
+  - component: {fileID: 2012295334}
   m_Layer: 5
   m_Name: MobileInputs
   m_TagString: Untagged
@@ -3848,11 +3769,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b000bd7af4e54c73bf3eb3fc1164e371, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_DelayBeforeDisabling: 0
+  m_DelayBeforeDisabling: 2
   m_Images: []
   m_Texts:
   - {fileID: 1792332572}
   - {fileID: 1546002}
+--- !u!114 &2012295334
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2012295331}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3fb134bc449f3fa4abaafa2163099139, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!222 &493382346337875487
 CanvasRenderer:
   m_ObjectHideFlags: 0
