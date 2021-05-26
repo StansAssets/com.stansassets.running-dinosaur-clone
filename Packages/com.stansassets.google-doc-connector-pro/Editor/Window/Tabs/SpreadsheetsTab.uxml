@@ -1,0 +1,21 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements"
+         xmlns:sa="StansAssets.Foundation.UIElements">
+
+    <sa:SettingsBlock label="Spreadsheets">
+        <sa:HelpBox type="Info" name="no-spreadsheets-note" text="You haven't added any Spreadsheets yet."/>
+        <ui:VisualElement name="NoCredentials">
+            <ui:Button text="Upload credentials" name="upload-credentials"/>
+            <sa:HelpBox type="Error" name="no-credentials-HelpBox" text="You haven't have credentials"/>
+            <sa:Hyperlink link="https://github.com/StansAssets/com.stansassets.google-doc-connector-pro/wiki/Setup">
+                <ui:Label text="Add credentials.json" class="no-credentials-label"/>
+            </sa:Hyperlink>
+        </ui:VisualElement>
+        <ui:VisualElement focusable="True" name="spreadsheets-container" class="tab-spreadsheets-container"/>
+    </sa:SettingsBlock>
+
+    <sa:SettingsBlock label="Import New Document" class="import-container">
+        <ui:TextField picking-mode="Ignore" name="spreadsheetIdText" class="add-new-spreadsheet"/>
+        <ui:Button text="Import" name="addSpreadsheetBtn"/>
+    </sa:SettingsBlock>
+    
+</ui:UXML>
