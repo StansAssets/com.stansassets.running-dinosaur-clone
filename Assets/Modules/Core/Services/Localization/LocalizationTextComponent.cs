@@ -4,6 +4,7 @@ using UnityEngine.UI;
 
 namespace StansAssets.Dino.Localization
 {
+    [RequireComponent(typeof(Text))]
     public class LocalizationTextComponent : MonoBehaviour, ILocalizationListener
     {
         [SerializeField] private string m_token = default;
