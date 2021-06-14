@@ -8,7 +8,7 @@ namespace StansAssets.ProjectSample.Ads
     {
         UM_iAdsClient m_Client;
         UM_AdPlatform m_Platform;
-        
+
         public AdsManager()
         {
             Platform = UM_AdPlatform.Google;
@@ -21,9 +21,10 @@ namespace StansAssets.ProjectSample.Ads
                 m_Client = UM_AdvertisementService.GetClient(Platform);
             }
         }
-        
+
         public void ShowRewardedAds(Action<bool> callback)
         {
+            /*(
             m_Client.RewardedAds.Load(result =>
             {
                 if (result.IsSucceeded)
@@ -31,14 +32,14 @@ namespace StansAssets.ProjectSample.Ads
                     Debug.Log("Rewarded ad loaded");
                     m_Client.RewardedAds.Show(
                                               adsResult => {
-                                                  
+
                                               });
                 }
                 else
                 {
                     Debug.Log("Failed to load banner ads: " + result.Error.Message);
                 }
-            });
+            });*/
         }
 
         public void ShowBanner(Action callback)

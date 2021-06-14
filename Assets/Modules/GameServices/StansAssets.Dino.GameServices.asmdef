@@ -1,17 +1,11 @@
 {
-    "name": "StansAssets.Dino.Game",
+    "name": "StansAssets.Dino.GameServices",
     "rootNamespace": "",
     "references": [
         "SA.CrossPlatform",
-        "StansAssets.ProjectSample.Core",
-        "StansAssets.ProjectSample.UI",
-        "StansAssets.SceneManagement",
         "StansAssets.Foundation",
-        "StansAssets.Dino.GameUI",
-        "StansAssets.Dino.EndGame",
-        "StansAssets.Dino.InApps",
-        "StansAssets.Dino.Input",
-        "StansAssets.Dino.GameServices"
+        "SA.Foundation",
+        "SA.Android"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

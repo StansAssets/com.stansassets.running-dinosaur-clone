@@ -23,11 +23,11 @@ namespace StansAssets.Dino.MainMenu
 
         public override void ChangeState(StackChangeEvent<AppState> evt, IProgressReporter progressReporter)
         {
-            var adsLoader = App.Services.Get<AdsManager>();
+           // var adsLoader = App.Services.Get<AdsManager>();
             switch (evt.Action)
             {
                 case StackAction.Added:
-                    adsLoader.ShowBanner(() => { });
+                   // adsLoader.ShowBanner(() => { });
                     if (m_MainMenuController != null)
                     {
                         m_MainMenuController.Active();
@@ -46,13 +46,13 @@ namespace StansAssets.Dino.MainMenu
                         });
                     }
                     break;
-                
+
                 case StackAction.Removed:
-                    adsLoader.HideBanner();
+                    //adsLoader.HideBanner();
                     m_MainMenuController.Deactivate();
                     progressReporter.SetDone();
                     break;
-                
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(evt.Action), evt.Action, null);
             }

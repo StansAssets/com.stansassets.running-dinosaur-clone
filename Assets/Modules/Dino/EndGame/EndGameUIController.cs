@@ -12,19 +12,19 @@ namespace StansAssets.Dino.EndGame
             add => m_MainMenu.onClick.AddListener (value);
             remove => m_MainMenu.onClick.RemoveListener (value);
         }
-        
+
         public event UnityAction OnRestart {
             add => m_RestartButton.onClick.AddListener (value);
             remove => m_RestartButton.onClick.RemoveListener (value);
         }
-        
+
         [SerializeField] Button m_RestartButton;
         [SerializeField] Button m_MainMenu;
 
 
         void Start()
         {
-            App.Services.Get<AdsManager>().ShowRewardedAds(HandleRewardedAdsResult);
+            //App.Services.Get<AdsManager>().ShowRewardedAds(HandleRewardedAdsResult);
         }
 
         void HandleRewardedAdsResult(bool result)
