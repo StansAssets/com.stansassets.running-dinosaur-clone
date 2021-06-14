@@ -2,9 +2,9 @@ using System;
 using StansAssets.Foundation;
 using StansAssets.Foundation.Patterns;
 using StansAssets.SceneManagement;
-using StansAssets.ProjectSample.Ads;
 using SA.CrossPlatform.Analytics;
 using StansAssets.Dino.GameServices;
+using StansAssets.ProjectSample.Ads;
 using StansAssets.ProjectSample.Controls;
 
 namespace StansAssets.ProjectSample.Core

@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "393221173365",
+    "project_id": "dino-game-ad969",
+    "storage_bucket": "dino-game-ad969.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:393221173365:android:41b5eb8326ea3265df083c",
+        "android_client_info": {
+          "package_name": "com.kapps.dino"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "393221173365-3im2rijp2p7crf7a3qgr1gn741a4nc1e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA9rODy9EHL2hsmZVhC-rjqTDBukix2UFA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "393221173365-3im2rijp2p7crf7a3qgr1gn741a4nc1e.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "393221173365-bsio1ept8afmjc83i9vslv6vof2miao1.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.kapps.dino"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

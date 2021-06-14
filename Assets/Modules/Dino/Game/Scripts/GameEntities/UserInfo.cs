@@ -17,7 +17,7 @@ namespace StansAssets.Dino.Game
             if (player != null) {
                 m_playerName.text = player.DisplayName;
                 player.GetAvatar((texture) => {
-                    m_avatarImage.texture = texture;`
+                    m_avatarImage.texture = texture;
                 });
             }
 

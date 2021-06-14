@@ -1,8 +1,10 @@
 {
     "name": "StansAssets.ProjectSample.Ads",
+    "rootNamespace": "",
     "references": [
         "GUID:68dcdd92efcfdc84898218413eb49bec",
-        "GUID:5b31e461925be0e4096613f091efd54e"
+        "GUID:5b31e461925be0e4096613f091efd54e",
+        "GUID:c6cea9a782a3d1d478fafb720b06b41d"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
