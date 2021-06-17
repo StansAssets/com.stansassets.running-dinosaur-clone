@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LastVersionCode: 
   AndroidIds:
-    AppId: 
-    BannerId: 
+    AppId: ca-app-pub-6537319135845708~1792712521
+    BannerId: ca-app-pub-6537319135845708/4569003383
     NonRewardedId: 
-    RewardedId: 
+    RewardedId: ca-app-pub-6537319135845708/7003595030
   IOSIds:
     AppId: 
     BannerId: 
@@ -26,7 +26,7 @@ MonoBehaviour:
   TestDevices: []
   Keywords: []
   TagForChildDirectedTreatment: 0
-  NPA: 1
+  NPA: 0
   BannerPosition: 1
   BannerSize: 4
   Gender: 0

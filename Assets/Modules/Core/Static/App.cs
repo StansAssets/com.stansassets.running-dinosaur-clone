@@ -22,7 +22,7 @@ namespace StansAssets.ProjectSample.Core
             var sceneService = new DefaultSceneLoadService();
             s_Services.Register<ISceneService>(sceneService);
             s_Services.Register<IPoolingService>(new GameObjectsPool("GameObjects Pool"));
-            //s_Services.Register(new AdsManager());
+            s_Services.Register(new AdsManager());
 
             var gameService = new GameServices();
             gameService.Init();

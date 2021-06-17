@@ -1,0 +1,30 @@
+{
+    "name": "StansAssets.Addons.GoogleMobileAds.Editor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:c5cc405f54837704db579fe58d09afac",
+        "GUID:cbd32741d915dec4b8bf7f2c22a3d1c0",
+        "GUID:d7fd38e523265d944a6a3a8c26a0b306",
+        "GUID:f3af174804a485643a32e061a90ef9f7",
+        "GUID:eb9c0d5fe0711f744be82213877416aa",
+        "GUID:db0eb1f6c1244402aa4d287a997cdb47",
+        "GUID:618d739a61acd4b7d86dceb8592359b2",
+        "GUID:cbb42e4cfd9484f52972c8f05e1c3252",
+        "GUID:84cdca05a21ebcc449c1a5edb330f044",
+        "GUID:5b31e461925be0e4096613f091efd54e",
+        "GUID:e322f1a843d5b4f8095d71c70e5fbccc",
+        "GUID:47f61dbfc0a9af447b4ebf9aab14dc16",
+        "GUID:68dcdd92efcfdc84898218413eb49bec"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

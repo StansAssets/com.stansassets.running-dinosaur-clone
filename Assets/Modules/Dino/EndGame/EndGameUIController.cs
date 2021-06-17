@@ -24,7 +24,7 @@ namespace StansAssets.Dino.EndGame
 
         void Start()
         {
-            //App.Services.Get<AdsManager>().ShowRewardedAds(HandleRewardedAdsResult);
+            App.Services.Get<AdsManager>().ShowRewardedAds(HandleRewardedAdsResult);
         }
 
         void HandleRewardedAdsResult(bool result)

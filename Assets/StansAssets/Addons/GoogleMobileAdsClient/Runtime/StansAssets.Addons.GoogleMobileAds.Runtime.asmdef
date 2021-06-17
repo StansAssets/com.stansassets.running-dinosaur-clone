@@ -1,0 +1,18 @@
+{
+    "name": "StansAssets.Addons.GoogleMobileAds.Runtime",
+    "rootNamespace": "",
+    "references": [
+        "GUID:68dcdd92efcfdc84898218413eb49bec",
+        "GUID:5b31e461925be0e4096613f091efd54e",
+        "GUID:db0eb1f6c1244402aa4d287a997cdb47"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

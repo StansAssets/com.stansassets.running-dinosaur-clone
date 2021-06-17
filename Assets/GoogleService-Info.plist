@@ -3,21 +3,23 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>393221173365-bsio1ept8afmjc83i9vslv6vof2miao1.apps.googleusercontent.com</string>
+	<string>182488199021-thvv55sdlal3gug489kut133n4qoa51f.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.393221173365-bsio1ept8afmjc83i9vslv6vof2miao1</string>
+	<string>com.googleusercontent.apps.182488199021-thvv55sdlal3gug489kut133n4qoa51f</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>182488199021-3r7f2lonlm1sjmknh9jbslg2857a6fsn.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyAHSKt54RBjFGTheRfp517_Gw4Ti2gOweA</string>
+	<string>AIzaSyCLr_yC1dTFipBz9UjiGp1mPO0MLTVLQ8Q</string>
 	<key>GCM_SENDER_ID</key>
-	<string>393221173365</string>
+	<string>182488199021</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>com.kapps.dino</string>
 	<key>PROJECT_ID</key>
-	<string>dino-game-ad969</string>
+	<string>dyno-game-ps-2661126</string>
 	<key>STORAGE_BUCKET</key>
-	<string>dino-game-ad969.appspot.com</string>
+	<string>dyno-game-ps-2661126.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:393221173365:ios:7d042043ad3fd414df083c</string>
+	<string>1:182488199021:ios:d69786adf1fa3ac9e4b464</string>
 </dict>
 </plist>

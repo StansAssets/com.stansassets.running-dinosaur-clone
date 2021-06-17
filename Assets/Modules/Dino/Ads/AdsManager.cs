@@ -13,12 +13,16 @@ namespace StansAssets.ProjectSample.Ads
         {
             Platform = UM_AdPlatform.Google;
 
-            // var settings = UM_GoogleAdsSettings.Instance;
-            // var android = settings.AndroidIds;
-            //
-            // android.AppId = "ca-app-pub-6537319135845708~1792712521";
+            var settings = UM_GoogleAdsSettings.Instance;
+            var android = settings.AndroidIds;
+
+            android.AppId = "ca-app-pub-6537319135845708~1792712521";
             // android.BannerId = "ca-app-pub-6537319135845708/4569003383";
             // android.RewardedId = "ca-app-pub-6537319135845708/7003595030";
+
+            // Google Test Ad Units
+            android.BannerId = "ca-app-pub-3940256099942544/6300978111";
+            android.RewardedId = "ca-app-pub-3940256099942544/5224354917";
         }
 
         public UM_AdPlatform Platform {
@@ -37,8 +41,9 @@ namespace StansAssets.ProjectSample.Ads
                 {
                     Debug.Log("Rewarded ad loaded");
                     m_Client.RewardedAds.Show(
-                                              adsResult => {
-
+                                              adsResult =>
+                                              {
+                                                  callback(adsResult == UM_RewardedAdsResult.Finished);
                                               });
                 }
                 else

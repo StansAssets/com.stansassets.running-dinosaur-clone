@@ -19,36 +19,14 @@ namespace StansAssets.Dino.Game
 
         Vector2 m_SpawnPosition;
         DinoState m_State;
-        
+
+        IInputManager m_InputManager;
+
         public void SetInputManager(IInputManager inputManager)
         {
-            inputManager.Subscribe(InputEventType.Jump,
-                             jumpPressed => {
-                                 if (jumpPressed)
-                                 {
-                                     if (State != DinoState.Jumping)
-                                         State = DinoState.Jumping;
-                                 }
-                                 else
-                                 {
-                                     m_Force2D.enabled = false;
-                                 }
-                             });
-
-            inputManager.Subscribe(InputEventType.Duck,
-                             duckingPressed => {
-                                 if (duckingPressed)
-                                 {
-                                     if (State == DinoState.Grounded)
-                                         State = DinoState.Ducking;
-                                 }
-                                 else
-                                 {
-                                     if (State == DinoState.Ducking)
-                                         State = DinoState.Grounded;
-                                 }
-                             });
-
+            m_InputManager = inputManager;
+            m_InputManager.Subscribe(InputEventType.Jump, HandleJumpState);
+            m_InputManager.Subscribe(InputEventType.Duck, HandleDuckingState);
         }
 
         void Start ()
@@ -58,11 +36,43 @@ namespace StansAssets.Dino.Game
 
             m_Force2D.force = Vector2.up * m_JumpButtonHeldForce;
             m_Force2D.enabled = false;
-            
+
             if (m_PremiumVisuals)
                 m_PremiumVisuals.SetActive(RewardManager.HasPremium);
         }
 
+        private void OnDestroy()
+        {
+            m_InputManager.UnSubscribe(InputEventType.Jump, HandleJumpState);
+            m_InputManager.UnSubscribe(InputEventType.Duck, HandleDuckingState);
+        }
+
+        private void HandleJumpState(bool jumpPressed)
+        {
+            if (jumpPressed)
+            {
+                if (State != DinoState.Jumping)
+                    State = DinoState.Jumping;
+            }
+            else
+            {
+                m_Force2D.enabled = false;
+            }
+        }
+
+        private void HandleDuckingState(bool duckingPressed)
+        {
+            if (duckingPressed)
+            {
+                if (State == DinoState.Grounded)
+                    State = DinoState.Ducking;
+            }
+            else
+            {
+                if (State == DinoState.Ducking)
+                    State = DinoState.Grounded;
+            }
+        }
 
         public DinoState State {
             get => m_State;
@@ -79,7 +89,7 @@ namespace StansAssets.Dino.Game
                     case DinoState.Grounded:
                         m_Force2D.enabled = false;
                         break;
-                    case DinoState.Dead: 
+                    case DinoState.Dead:
                         SetFrozen (true);
                         m_Rigidbody2D.velocity = Vector2.zero;
                         break;
