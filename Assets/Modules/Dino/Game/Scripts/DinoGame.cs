@@ -12,51 +12,69 @@ namespace StansAssets.Dino.Game
     {
         const string k_InGameUISceneName = "DinoInGameUI";
 
-        public event Action OnGameOver, OnStart;
+        public event Action OnGameOver = delegate { };
+        public event Action OnStart = delegate { };
+
+        public event Action<int> OnLivesAmountChanged = delegate { };
 
         readonly DinoLevel m_DinoLevel;
         readonly DinoCharacter m_DinoCharacter;
 
         internal bool IsGameOver { get; private set; }
-        private IGameServices m_gameServices;
+
+        internal int m_LivesLeft;
+        internal int LivesLeft
+        {
+            get => m_LivesLeft;
+            private set
+            {
+                m_LivesLeft = value;
+                OnLivesAmountChanged(m_LivesLeft);
+            }
+        }
+
+        private IDinoInGameUI m_InGameUI;
+        private IGameServices m_GameServices;
+
+        private const int DinoLives = 3;
 
         public DinoGame(Scene targetScene) {
-
-            m_gameServices = App.Services.Get<IGameServices>();
+            LivesLeft = DinoLives;
+            m_GameServices = App.Services.Get<IGameServices>();
             m_DinoCharacter = targetScene.GetComponentInChildren<DinoCharacter>();
-            m_DinoCharacter.OnHit += () => OnGameOver?.Invoke();
-            OnGameOver += () =>
+            m_DinoCharacter.OnHit += OnHitCallbackHandler;
+
+            m_DinoLevel = targetScene.GetComponentInChildren<DinoLevel>();
+            App.Services.Get<ISceneService>()
+                .Load<IDinoInGameUI>(
+                    k_InGameUISceneName,
+                    (scene, ui) =>
+                    {
+                        ui.SetLivesAmount(LivesLeft);
+                        OnStart += ui.Reset;
+                        OnLivesAmountChanged += ui.SetLivesAmount;
+                        m_DinoLevel.OnScoreGained += ui.AddPoints;
+                    });
+        }
+
+        private void OnHitCallbackHandler()
+        {
+            LivesLeft--;
+            if (LivesLeft == 0)
             {
                 IsGameOver = true;
                 m_DinoCharacter.State = DinoState.Dead;
                 var details = new Dictionary<string, object>();
                 details.Add("Score", m_DinoLevel.Score);
                 UM_AnalyticsService.Client.Event("GameOver", details);
-                m_gameServices.SubmitScore(m_DinoLevel.Score);
-            };
-
-            m_DinoLevel = targetScene.GetComponentInChildren<DinoLevel>();
-            App.Services.Get<ISceneService>()
-               .Load<IDinoInGameUI>(
-                                    k_InGameUISceneName,
-                                    (scene, ui) => {
-                                        OnStart += ui.Reset;
-                                        m_DinoLevel.OnScoreGained += ui.AddPoints;
-                                    });
-
-            OnStart += () => {
-                m_DinoCharacter.State = DinoState.WaitingForStart;
-                m_DinoLevel.Reset();
-                m_DinoLevel.SetLevelActive(true);
-                m_DinoCharacter.State = DinoState.Grounded;
-                m_DinoCharacter.SetFrozen(false);
-            };
-
+                m_GameServices.SubmitScore(m_DinoLevel.Score);
+                OnGameOver();
+            }
         }
 
         internal void Restart()
         {
-            OnStart?.Invoke();
+            StartGame();
         }
 
         internal void Pause()
@@ -76,7 +94,19 @@ namespace StansAssets.Dino.Game
 
         internal void Start()
         {
-            OnStart?.Invoke();
+            StartGame();
+        }
+
+        private void StartGame()
+        {
+            LivesLeft = DinoLives;
+            m_DinoCharacter.State = DinoState.WaitingForStart;
+            m_DinoLevel.Reset();
+            m_DinoLevel.SetLevelActive(true);
+            m_DinoCharacter.State = DinoState.Grounded;
+            m_DinoCharacter.SetFrozen(false);
+
+            OnStart.Invoke();
         }
 
         void SetGameState(bool state)

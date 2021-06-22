@@ -7,7 +7,7 @@ namespace StansAssets.Dino.Game
 {
     public class DinoCharacter : MonoBehaviour
     {
-        public event Action OnHit;
+        public event Action OnHit = delegate { };
 
         [SerializeField] AudioSource m_JumpAudioSource;
         [SerializeField] Animator m_Animator;
@@ -111,13 +111,17 @@ namespace StansAssets.Dino.Game
             m_Animator.speed = frozen ? 0 : 1;
         }
 
-        void OnCollisionEnter2D (Collision2D collision)
+        private void OnCollisionEnter2D(Collision2D other)
         {
-            if (collision.gameObject.CompareTag ("Player")) {
+            if (other.gameObject.CompareTag ("Player")) {
                 if (State == DinoState.Jumping)
                     State = DinoState.Grounded;
             }
-            else { OnHit?.Invoke (); }
+        }
+
+        void OnTriggerEnter2D(Collider2D other)
+        {
+            OnHit.Invoke ();
         }
 
         string GetAnimationName ()
