@@ -27,7 +27,6 @@ namespace StansAssets.ProjectSample.Core
             s_Services.Register<IPoolingService>(new GameObjectsPool("GameObjects Pool"));
             s_Services.Register(new AdsManager());
             s_Services.Register<ILocalizationService>(new GoogleDocLocalizationService(DEFAULT_LANGUAGE));
-
             var gameService = new GameServices();
             gameService.Init();
             s_Services.Register<IGameServices>(gameService);
