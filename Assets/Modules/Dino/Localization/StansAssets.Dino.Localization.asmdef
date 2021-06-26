@@ -1,0 +1,16 @@
+{
+    "name": "StansAssets.Dino.Localization",
+    "rootNamespace": "",
+    "references": [
+        "StansAssets.GoogleDoc"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -5,12 +5,15 @@ using StansAssets.SceneManagement;
 using SA.CrossPlatform.Analytics;
 using StansAssets.Dino.GameServices;
 using StansAssets.ProjectSample.Ads;
+using StansAssets.Dino.Localization;
 using StansAssets.ProjectSample.Controls;
 
 namespace StansAssets.ProjectSample.Core
 {
     public static class App
     {
+        private const string DEFAULT_LANGUAGE = "EN";
+
         static readonly ServiceLocator s_Services = new ServiceLocator();
         static readonly ApplicationStateStack<AppState> s_State = new ApplicationStateStack<AppState>();
 
@@ -23,7 +26,7 @@ namespace StansAssets.ProjectSample.Core
             s_Services.Register<ISceneService>(sceneService);
             s_Services.Register<IPoolingService>(new GameObjectsPool("GameObjects Pool"));
             s_Services.Register(new AdsManager());
-
+            s_Services.Register<ILocalizationService>(new GoogleDocLocalizationService(DEFAULT_LANGUAGE));
             var gameService = new GameServices();
             gameService.Init();
             s_Services.Register<IGameServices>(gameService);

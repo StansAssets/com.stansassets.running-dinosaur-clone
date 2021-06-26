@@ -1,0 +1,32 @@
+.panel {
+    background-color: rgb(190, 190, 190);
+}
+
+.lang-element,
+.lang-element-selected,
+.sheet-element {
+    border-color: rgb(138, 138, 138);
+    background-color: rgb(165, 165, 165);
+}
+
+.lang-element:hover,
+.lang-element-selected:hover {
+    border-color: rgb(165, 165, 165);
+    background-color: rgb(180, 180, 180);
+}
+
+.spreadsheet-panel {
+    border-color: rgb(138, 138, 138);
+    background-color: rgb(165, 165, 165);
+}
+
+.spreadsheet-id-copy,
+.spreadsheet-url-copy,
+.btn-refresh,
+.btn-remove {
+    -unity-background-image-tint-color: rgb(101, 101, 101);
+}
+
+.lang-element-selected {
+    color: #006f6f;
+}

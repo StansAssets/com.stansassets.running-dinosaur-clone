@@ -1,0 +1,145 @@
+.spreadsheet-url-copy {
+    background-image: url("../UI/Resources/browser.png");
+}
+
+.btn-refresh {
+    background-image: url('../UI/Resources/refresh.png');
+}
+
+.btn-left,
+.btn-right {
+    width: 16px;
+    height: 16px;
+    border-left-width: 1px;
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+    border-right-width: 1px;
+    -unity-text-align: middle-center;
+    flex: 0 0 auto;
+    overflow: hidden;
+    white-space: nowrap;
+    border-width: 1px;
+    padding-left: 1px;
+    padding-right: 1px;
+    padding-top: 1px;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    border-radius: 3px;
+    font-size: 12px;
+    flex-shrink: 0;
+    border-top-right-radius: -1px;
+    border-bottom-right-radius: -1px;
+}
+
+.btn-right {
+    border-radius: -1px 3px 3px -1px;
+    border-left-width: -1px;
+}
+
+.row {
+    flex-direction: row;
+}
+
+.flexible-space {
+    flex-grow: 1;
+}
+
+.spreadsheet-button-panel {
+    flex: 0 0 auto;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    margin-right: 2px;
+}
+
+.list-spreadsheet {
+    min-width: 150px;
+}
+
+.label-doc-info {
+    margin-bottom: 5px;
+}
+
+.list-doc-info {
+    flex-wrap: wrap;
+    flex-direction: row;
+    margin-bottom: 5px;
+}
+
+.lang-element,
+.lang-element-selected,
+.sheet-element {
+    flex-grow: 0;
+    flex-shrink: 0;
+    margin-left: 0;
+    margin-right: 5px;
+    border-width: 0;
+    border-bottom-width: 1px;
+    padding: 2px 5px 2px 5px;
+    margin-bottom: 6px;
+    flex-direction: row;
+    border-radius: 6px;
+}
+
+.lang-element,
+.lang-element-selected {
+    cursor: link;
+}
+
+.choose-spreadsheet {
+    margin: 0 5px 5px 3px;
+}
+
+.localization-error {
+    margin: 5px 2px 5px 4px;
+}
+
+.status-icon-yellow,
+.status-icon-red,
+.status-icon-green {
+    margin: 1px 2px 0 2px;
+    height: 8px;
+    width: 8px;
+    background-image: url('../UI/Resources/circle.png');
+    border-radius: 6px;
+}
+
+.status-icon-yellow {
+    -unity-background-image-tint-color: yellow;
+}
+
+.status-icon-green {
+    -unity-background-image-tint-color: green;
+}
+
+.status-icon-red {
+    -unity-background-image-tint-color: red;
+}
+
+.spreadsheet-bottom-panel {
+    margin: 4px 0 5px 3px;
+    flex-direction: row;
+    height: 9px;
+    min-height: 9px;
+}
+
+.spreadsheet-date {
+    -unity-text-align: middle-right;
+}
+
+.spreadsheet-loading {
+    margin-left: 1px;
+    margin-right: 1px;
+}
+
+.spreadsheet-panel {
+    flex-grow: 0;
+    flex-shrink: 0;
+    margin-left: 0;
+    margin-right: 0;
+    border-bottom-width: 1px;
+    padding-top: 1px;
+    margin-bottom: 6px;
+}
