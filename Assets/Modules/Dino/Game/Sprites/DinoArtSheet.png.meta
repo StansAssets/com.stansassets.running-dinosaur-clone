@@ -688,9 +688,9 @@ TextureImporter:
       name: moon__1
       rect:
         serializedVersion: 2
-        x: 1235
+        x: 1236
         y: 48
-        width: 39
+        width: 37
         height: 80
       alignment: 4
       pivot: {x: 0, y: 0.5}
