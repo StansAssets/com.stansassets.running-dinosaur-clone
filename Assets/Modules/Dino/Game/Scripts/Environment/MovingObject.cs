@@ -11,7 +11,8 @@ namespace StansAssets.Dino.Game
         [SerializeField] bool m_DisabledAtDay, m_DisabledAtNight;
         [SerializeField] Rect m_Bounds;
         [SerializeField] GameObject m_PremiumVisuals;
-
+        
+        private int m_ScreenHeight;
         float m_MovementPerScorePoint;
         protected Image m_Image;
         Vector3 m_InitialPosition;
@@ -25,7 +26,7 @@ namespace StansAssets.Dino.Game
             m_MovementPerScorePoint = -m_Bounds.width / m_ScoreForFullCycle;
             m_Image = m_Visuals.GetComponent<Image> ();
             m_InitialPosition = transform.localPosition;
-
+            
             var level = FindObjectOfType<DinoLevel> ();
             level.OnReset += Reset;
             level.OnScoreGained += AddScore;
@@ -36,6 +37,7 @@ namespace StansAssets.Dino.Game
                 m_PremiumVisuals.SetActive(RewardManager.HasPremium);
             
             HandleDayTimeChange(true);
+            m_ScreenHeight = Screen.height;
         }
 
         protected virtual void HandleDayTimeChange (bool isDay)
@@ -57,7 +59,7 @@ namespace StansAssets.Dino.Game
             var position = m_Visuals.transform.position;
             var translation = new Vector3 (m_MovementPerScorePoint * score, 0);
             if (position.x + translation.x < m_Bounds.xMin)
-                translation += new Vector3(m_Bounds.width, Random.Range (m_Bounds.yMin, m_Bounds.yMax) - transform.localPosition.y);
+            m_Visuals.transform.localPosition = new Vector3(m_Bounds.width, Random.Range(m_ScreenHeight/2, m_ScreenHeight));
             m_Visuals.transform.Translate (translation);
         }
     }
